@@ -5,9 +5,300 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DP Exam Practice - Official Dynamic Positioning Quiz</title>
     <meta name="description" content="Practice Dynamic Positioning (DP) exams online. Based on official Nautical Institute questions for DP revalidation certification.">
+    <meta name="keywords" content="dynamic positioning, DP exam, nautical institute, maritime, offshore, quiz, practice test">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .intro-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .exam-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .exam-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border-left: 5px solid;
+        }
+
+        .exam-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .exam-1 { border-left-color: #3498db; }
+        .exam-2 { border-left-color: #e74c3c; }
+        .exam-3 { border-left-color: #27ae60; }
+
+        .exam-card h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .exam-info {
+            margin-bottom: 20px;
+        }
+
+        .exam-info p {
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .exam-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(45deg, #27ae60, #229954);
+            color: white;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .feature {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .feature h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .disclaimer {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .exam-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            background: #f39c12;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
-    <h1>🚢 DP Quiz kommer snart!</h1>
-    <p>Dynamic Positioning exam practice site under construction...</p>
+    <div class="container">
+        <div class="header">
+            <h1>🚢 DP Exam Practice</h1>
+            <div class="subtitle">Official Dynamic Positioning Quiz Collection</div>
+            <div class="subtitle">Based on The Nautical Institute Exam Questions</div>
+        </div>
+
+        <div class="intro-card">
+            <h2>Welcome to DP Exam Practice</h2>
+            <p>Practice for your Dynamic Positioning (DP) revalidation exam with these interactive quizzes based on official exam questions from The Nautical Institute. Each quiz covers different aspects of DP operations and systems.</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="icon">📝</div>
+                    <h3>Official Questions</h3>
+                    <p>Based on real DP exam questions from The Nautical Institute</p>
+                </div>
+                <div class="feature">
+                    <div class="icon">⚡</div>
+                    <h3>Instant Feedback</h3>
+                    <p>Get immediate results with correct answers highlighted</p>
+                </div>
+                <div class="feature">
+                    <div class="icon">📱</div>
+                    <h3>Mobile Friendly</h3>
+                    <p>Practice anywhere on your phone, tablet, or computer</p>
+                </div>
+                <div class="feature">
+                    <div class="icon">🎯</div>
+                    <h3>70% Pass Mark</h3>
+                    <p>Same passing criteria as the official DP exam</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="exam-grid">
+            <div class="exam-card exam-1">
+                <h2>DP Online Exam 1 <span class="badge">Fundamentals</span></h2>
+                <div class="exam-info">
+                    <p><strong>Focus:</strong> Basic DP systems, redundancy, and position reference systems</p>
+                    <p><strong>Topics:</strong> Equipment classes, Common Mode Failure, DARPS systems</p>
+                </div>
+                <div class="exam-stats">
+                    <span>📊 18 Questions</span>
+                    <span>⏱️ ~20 minutes</span>
+                    <span>🎓 Difficulty: Intermediate</span>
+                </div>
+                <a href="exam1.html" class="btn btn-primary">Start Exam 1</a>
+            </div>
+
+            <div class="exam-card exam-2">
+                <h2>DP Online Exam 2 <span class="badge">Acoustics</span></h2>
+                <div class="exam-info">
+                    <p><strong>Focus:</strong> Acoustic positioning systems and underwater acoustics</p>
+                    <p><strong>Topics:</strong> HPR systems, USBL, LBL, GNSS, acoustic conditions</p>
+                </div>
+                <div class="exam-stats">
+                    <span>📊 8 Questions</span>
+                    <span>⏱️ ~10 minutes</span>
+                    <span>🎓 Difficulty: Advanced</span>
+                </div>
+                <a href="exam2.html" class="btn btn-secondary">Start Exam 2</a>
+            </div>
+
+            <div class="exam-card exam-3">
+                <h2>DP Online Exam 3 <span class="badge">Operations</span></h2>
+                <div class="exam-info">
+                    <p><strong>Focus:</strong> Operational procedures and sensor management</p>
+                    <p><strong>Topics:</strong> Wind sensors, gyrocompass, Taut Wire, Auto Track mode</p>
+                </div>
+                <div class="exam-stats">
+                    <span>📊 6 Questions</span>
+                    <span>⏱️ ~8 minutes</span>
+                    <span>🎓 Difficulty: Practical</span>
+                </div>
+                <a href="exam3.html" class="btn btn-success">Start Exam 3</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <h3>About This Practice Platform</h3>
+            <p>This free practice platform was created to help maritime professionals prepare for their DP revalidation exams. All questions are based on official examination materials and follow the same format as The Nautical Institute's online revalidation exam.</p>
+            
+            <div class="disclaimer">
+                <p><strong>Disclaimer:</strong> This is an unofficial practice platform. For official DP certification and revalidation, please visit <a href="https://www.nautinst.org" target="_blank" rel="noopener">The Nautical Institute</a> website. The questions used here are for educational purposes only.</p>
+                <p><strong>Exam Format:</strong> Official DP revalidation exams consist of 30 multiple-choice questions with a 1-hour time limit and 70% pass mark.</p>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <p>🌟 <strong>Good luck with your DP studies!</strong> 🌟</p>
+                <p style="font-size: 0.9rem; color: #888; margin-top: 10px;">
+                    Created for the maritime community • Updated regularly with new questions
+                </p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
