@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DP Online Exam 2 - Acoustic Positioning Systems</title>
+    <meta name="description" content="DP Online Exam 2 - Master acoustic positioning systems with 8 advanced questions on HPR, USBL, LBL systems.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            color: #2d3748;
+            overflow-x: hidden;
+        }
+
+        /* Animated background particles */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(239, 68, 68, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .quiz-container {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 40px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            letter-spacing: -0.02em;
+        }
+
+        .exam-info {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(249, 115, 22, 0.15));
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .exam-info h3 {
+            color: #ffffff;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .exam-info p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+        
+        .question-counter {
+            text-align: center;
+            margin: 24px 0;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+        }
+        
+        .progress-container {
+            margin: 24px 0;
+            position: relative;
+        }
+
+        .progress {
+            background: rgba(255, 255, 255, 0.2);
+            height: 8px;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ef4444, #f97316, #f59e0b);
+            width: 0%;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 50px;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+        }
+        
+        .question {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 32px;
+            margin: 32px 0;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #ef4444, #f97316);
+        }
+        
+        .question.active {
+            display: block;
+            animation: questionSlide 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes questionSlide {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .question h3 {
+            color: #1a202c;
+            margin-bottom: 24px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            font-weight: 600;
+        }
+        
+        .options {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            gap: 16px;
+        }
+        
+        .options li {
+            padding: 20px 24px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 2px solid rgba(148, 163, 184, 0.2);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        .options li::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .options li:hover::before {
+            left: 100%;
+        }
+        
+        .options li:hover {
+            border-color: #ef4444;
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.2);
+        }
+        
+        .options li.selected {
+            border-color: #ef4444;
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
+            transform: translateY(-1px);
+        }
+        
+        .options li.correct {
+            border-color: #10b981;
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            animation: correctPulse 0.8s ease-out;
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+        
+        .options li.incorrect {
+            border-color: #ef4444;
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            animation: shake 0.6s ease-in-out;
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+        }
+        
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(239, 68, 68, 0.4);
+        }
+        
+        button:disabled {
+            background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        button:disabled::before {
+            display: none;
+        }
+        
+        .score {
+            text-align: center;
+            font-size: 1.4rem;
+            margin: 32px 0;
+            padding: 32px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            white-space: pre-line;
+            line-height: 1.6;
+        }
+        
+        .score.excellent {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-color: #10b981;
+            color: #065f46;
+        }
+        
+        .score.good {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-color: #f59e0b;
+            color: #92400e;
+        }
+        
+        .score.needs-improvement {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+
+            .quiz-container {
+                padding: 24px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .question {
+                padding: 24px;
+                margin: 20px 0;
+            }
+
+            .options li {
+                padding: 16px 20px;
+            }
+
+            button {
+                padding: 12px 24px;
+                font-size: 14px;
+            }
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-elements::before {
+            content: '🎯';
+            position: absolute;
+            top: 20%;
+            right: 10%;
+            font-size: 2rem;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-elements::after {
+            content: '🔊';
+            position: absolute;
+            bottom: 20%;
+            left: 10%;
+            font-size: 1.5rem;
+            opacity: 0.1;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements"></div>
+    
+    <div class="container">
+        <div class="quiz-container">
+            <a href="index.html" class="nav-link">← Back to Home</a>
+            
+            <h1>🎯 DP Online Exam 2</h1>
+            
+            <div class="exam-info">
+                <h3>Acoustic Positioning Systems</h3>
+                <p>This advanced exam focuses on underwater acoustics, HPR systems, baseline positioning technologies, and acoustic signal propagation. Master the technical aspects of acoustic positioning for DP operations.</p>
+            </div>
+            
+            <div class="question-counter">
+                Question <span id="current-question">1</span> of <span id="total-questions">8</span>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress">
+                    <div class="progress-bar" id="progress-bar"></div>
+                </div>
+            </div>
+            
+            <!-- Question 1 -->
+            <div class="question active" data-question="1">
+                <h3>1. Underwater acoustics can be utilized for which of the following applications?</h3>
+                <ul class="options">
+                    <li data-answer="wrong">A) Marking underwater features or hardware</li>
+                    <li data-answer="wrong">B) Position reference for DP purposes</li>
+                    <li data-answer="wrong">C) Tracking ROVs or other equipment</li>
+                    <li data-answer="correct">D) All of the above</li>
+                </ul>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question" data-question="2">
+                <h3>2. Which is the system that uses a single transducer and a calibrated array of transponders located on the sea floor?</h3>
+                <ul class="options">
+                    <li data-answer="wrong">A) Short Baseline (SBL) acoustic positioning</li>
+                    <li data-answer="wrong">B) Super Short Baseline (SSBL) acoustic positioning</li>
+                    <li data-answer="correct">C) Long Baseline (LBL) acoustic positioning</li>
+                    <li data-answer="wrong">D) Ultra Short Baseline (USBL) acoustic positioning</li>
+                </ul>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question" data-question="3">
+                <h3>3. Ultra Short Baseline (USBL) Hydroacoustic positioning is determined by:</h3>
+                <ul class="options">
+                    <li data-answer="correct">A) Range and bearing of a single transponder beacon</li>
+                    <li data-answer="wrong">B) Difference in time of arrival of signal from a single pinger beacon to an array of hydrophones mounted on the vessel hull</li>
+                    <li data-answer="wrong">C) Acoustic ranging from multiple transponder beacons in an array</li>
+                    <li data-answer="wrong">D) Monitoring signals from a mobile transponder beacon</li>
+                </ul>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question" data-question="4">
+                <h3>4. When using a Global Navigation Satellite System (GNSS) what is the recommended minimum number of satellites required for position fixing?</h3>
+                <ul class="options">
+                    <li data-answer="wrong">A) 1</li>
+                    <li data-answer="wrong">B) 2</li>
+                    <li data-answer="correct">C) 4</li>
+                    <li data-answer="wrong">D) 5</li>
+                </ul>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question" data-question="5">
+                <h3>5. Performance of an HPR system is often limited by acoustic conditions in the water. What would be an example of such a condition?</h3>
+                <ul class="options">
+                    <li data-answer="wrong">A) Oil leaking from the ROV</li>
+                    <li data-answer="correct">B) Noise from vessel thrusters</li>
+                    <li data-answer="wrong">C) Conversations between divers</li>
+                    <li data-answer="wrong">D) Noise from the Taut Wire winch</li>
+                </ul>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question" data-question="6">
+                <h3>6. A major reason for the loss of hydro-acoustic signals is:</h3>
+                <ul class="options">
+                    <li data-answer="wrong">A) Pressure gradient in the water column</li>
+                    <li data-answer="wrong">B) Marine growth</li>
+                    <li data-answer="wrong">C) Engine vibration</li>
+                    <li data-answer="correct">D) Noise and aeration from thrusters</li>
+                </ul>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question" data-question="7">
+                <h3>7. When using a Hydroacoustic Position Reference (HPR) system, acoustic reception is not adversely affected by:</h3>
+                <ul class="options">
+                    <li data-answer="wrong">A) Aeration in the water</li>
+                    <li data-answer="wrong">B) Thruster noise</li>
+                    <li data-answer="correct">C) Heavy snowfall</li>
+                    <li data-answer="wrong">D) Temperature layering in the water column</li>
+                </ul>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question" data-question="8">
+                <h3>8. The best placement, when possible, of HPR system transponder beacons will be:</h3>
+                <ul class="options">
+                    <li data-answer="wrong">A) Downwind and down-current from vessel location</li>
+                    <li data-answer="wrong">B) Down-current and upwind from vessel location</li>
+                    <li data-answer="wrong">C) Upwind and up-current from vessel location</li>
+                    <li data-answer="correct">D) Downwind and up-current from vessel location</li>
+                </ul>
+            </div>
+            
+            <div class="controls">
+                <button onclick="previousQuestion()" id="prev-btn" disabled>← Previous</button>
+                <button onclick="nextQuestion()" id="next-btn">Next →</button>
+                <button onclick="submitQuiz()" id="submit-btn" style="display: none;">Submit Quiz</button>
+            </div>
+            
+            <div id="result" style="display: none;">
+                <div class="score" id="score-display"></div>
+                <button onclick="restartQuiz()">🔄 Restart Quiz</button>
+                <a href="index.html" style="margin-left: 16px;" class="nav-link">← Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        let totalQuestions = 8;
+        let userAnswers = {};
+        let score = 0;
+
+        function updateProgress() {
+            const progress = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+            document.getElementById('current-question').textContent = currentQuestion;
+        }
+
+        function showQuestion(questionNum) {
+            document.querySelectorAll('.question').forEach(q => {
+                q.classList.remove('active');
+            });
+            document.querySelector(`[data-question="${questionNum}"]`).classList.add('active');
+            
+            document.getElementById('prev-btn').disabled = questionNum === 1;
+            document.getElementById('next-btn').style.display = questionNum === totalQuestions ? 'none' : 'inline-block';
+            document.getElementById('submit-btn').style.display = questionNum === totalQuestions ? 'inline-block' : 'none';
+            
+            updateProgress();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                currentQuestion++;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 1) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.options li')) {
+                const option = e.target.closest('.options li');
+                const question = option.closest('.question');
+                const questionNum = question.getAttribute('data-question');
+                
+                question.querySelectorAll('.options li').forEach(li => {
+                    li.classList.remove('selected');
+                });
+                
+                option.classList.add('selected');
+                userAnswers[questionNum] = option.getAttribute('data-answer');
+            }
+        });
+
+        function calculateScore() {
+            score = 0;
+            for (let i = 1; i <= totalQuestions; i++) {
+                if (userAnswers[i] === 'correct') {
+                    score++;
+                }
+            }
+            return score;
+        }
+
+        function submitQuiz() {
+            const finalScore = calculateScore();
+            const percentage = Math.round((finalScore / totalQuestions) * 100);
+            
+            document.querySelectorAll('.question').forEach(question => {
+                const questionNum = question.getAttribute('data-question');
+                const options = question.querySelectorAll('.options li');
+                
+                options.forEach(option => {
+                    const answer = option.getAttribute('data-answer');
+                    if (answer === 'correct') {
+                        option.classList.add('correct');
+                    } else if (option.classList.contains('selected') && answer === 'wrong') {
+                        option.classList.add('incorrect');
+                    }
+                });
+            });
+            
+            const scoreDisplay = document.getElementById('score-display');
+            let message = `🎯 Final Score: ${finalScore}/${totalQuestions} (${percentage}%)`;
+            
+            if (percentage >= 70) {
+                scoreDisplay.className = 'score excellent';
+                message += '\n\n🎉 Outstanding! You passed the exam!\nYou have excellent knowledge of acoustic positioning systems.';
+            } else if (percentage >= 60) {
+                scoreDisplay.className = 'score good';
+                message += '\n\n👍 Good work! You need 70% to pass.\nReview acoustic systems and try again.';
+            } else {
+                scoreDisplay.className = 'score needs-improvement';
+                message += '\n\n📚 More study required!\nFocus on HPR systems and underwater acoustics.';
+            }
+            
+            scoreDisplay.textContent = message;
+            document.getElementById('result').style.display = 'block';
+            document.querySelector('.controls').style.display = 'none';
+            
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function restartQuiz() {
+            currentQuestion = 1;
+            userAnswers = {};
+            score = 0;
+            
+            document.querySelectorAll('.question').forEach(question => {
+                const options = question.querySelectorAll('.options li');
+                options.forEach(option => {
+                    option.classList.remove('selected', 'correct', 'incorrect');
+                });
+            });
+            
+            document.getElementById('result').style.display = 'none';
+            document.querySelector('.controls').style.display = 'flex';
+            showQuestion(1);
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        updateProgress();
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft' && currentQuestion > 1) {
+                previousQuestion();
+            } else if (e.key === 'ArrowRight' && currentQuestion < totalQuestions) {
+                nextQuestion();
+            } else if (e.key === 'Enter' && currentQuestion === totalQuestions) {
+                submitQuiz();
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
