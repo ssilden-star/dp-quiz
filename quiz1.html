@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DP Quiz 1 - Fundamentals & Systems</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #ecf0f1;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #3498db;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .quiz-content {
+            padding: 40px;
+        }
+
+        .question-container {
+            margin-bottom: 30px;
+        }
+
+        .question-number {
+            color: #3498db;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .option:hover {
+            border-color: #3498db;
+            background: #e3f2fd;
+        }
+
+        .option.selected {
+            border-color: #3498db;
+            background: #e3f2fd;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
+        }
+
+        .option input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.3);
+        }
+
+        .option label {
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        .btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .question-counter {
+            font-size: 1rem;
+            color: #7f8c8d;
+        }
+
+        .results {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .results h2 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .score {
+            font-size: 3rem;
+            color: #27ae60;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .score.fail {
+            color: #e74c3c;
+        }
+
+        .answers-review {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .answer-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .answer-item.correct {
+            border-left: 5px solid #27ae60;
+            background: #d5f4e6;
+        }
+
+        .answer-item.incorrect {
+            border-left: 5px solid #e74c3c;
+            background: #fadbd8;
+        }
+
+        .answer-question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .answer-details {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .your-answer {
+            margin-bottom: 5px;
+        }
+
+        .correct-answer {
+            color: #27ae60;
+            font-weight: 600;
+        }
+
+        .incorrect-answer {
+            color: #e74c3c;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .quiz-content {
+                padding: 20px;
+            }
+            
+            .question {
+                font-size: 1.1rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>DP Quiz 1</h1>
+            <p>Fundamentals & Systems</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="quiz-content">
+            <div id="quizContainer">
+                <div class="question-container">
+                    <div class="question-number" id="questionNumber">Spørsmål 1 av 16</div>
+                    <div class="question" id="questionText"></div>
+                    <div class="options" id="optionsContainer"></div>
+                </div>
+                
+                <div class="navigation">
+                    <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()">Forrige</button>
+                    <div class="question-counter">
+                        <span id="currentQuestion">1</span> / <span id="totalQuestions">16</span>
+                    </div>
+                    <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Neste</button>
+                </div>
+            </div>
+
+            <div id="resultsContainer" style="display: none;">
+                <div class="results">
+                    <h2>Quiz 1 Fullført!</h2>
+                    <div class="score" id="scoreDisplay"></div>
+                    <p id="resultMessage"></p>
+                    <div style="margin: 30px 0;">
+                        <button class="btn btn-primary" onclick="startOver()">Ta quiz på nytt</button>
+                        <a href="index.html" class="btn btn-secondary">Tilbake til hovedmeny</a>
+                    </div>
+                </div>
+                
+                <div class="answers-review" id="answersReview">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #2c3e50;">Detaljerte Svar</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Which of the following inputs is required before surge or sway can be automatically controlled?",
+                options: ["Wind Sensor", "Vertical Reference Sensor", "Power Management System", "Position Reference System"],
+                correct: 3
+            },
+            {
+                question: "The possibility of loss of Position and/or Heading is reduced by:",
+                options: ["Ensuring system redundancy to Equipment Class 2 or 3", "Deploying multiple Position Reference Systems", "Ensuring DP Operators are well-trained and experienced", "Efficient and comprehensive operational planning"],
+                correct: 3
+            },
+            {
+                question: "What does the DP System use to calculate weighting (or confidence) for each Position Reference System?",
+                options: ["Distance from the receiver", "Signal strength", "Weather conditions", "Relative spread of fixes"],
+                correct: 3
+            },
+            {
+                question: "How many Position Reference Systems should be available and online during a Class 2 operation, according to IMO Recommendations?",
+                options: ["1", "2", "3", "4"],
+                correct: 2
+            },
+            {
+                question: "The function of DP system Redundancy is to:",
+                options: ["Enable the vessel to continue operations subsequent to a single failure", "Allow the Captain to sleep better", "Allow the operation to be safely abandoned after any single-point failure", "Allow vessel to use a higher setpoint speed"],
+                correct: 2
+            },
+            {
+                question: "What is the maximum effective range for Laser Position Reference Systems such as CyScan and Fanbeam?",
+                options: ["10 - 50m", "100 - 500m", "500 - 1000m", "1000m +"],
+                correct: 1
+            },
+            {
+                question: "What is the maximum effective range for Taut Wire Position Reference Systems?",
+                options: ["50 - 100m", "100 - 250m", "300 - 2000m", "2000m +"],
+                correct: 2
+            },
+            {
+                question: "How is the heading reference for the DP system normally obtained?",
+                options: ["Using the ship's magnetic compass", "Using the ship's gyrocompass", "Using the heading from the GPS", "Using the wind sensor"],
+                correct: 1
+            },
+            {
+                question: "How many Independent Power Generation systems should be available during DP Class 3 operations?",
+                options: ["1", "2", "3", "4"],
+                correct: 2
+            },
+            {
+                question: "What is a 'Common Mode Failure'?",
+                options: ["A failure that occurs when the vessel is moving", "A failure that affects multiple systems from a single cause", "A failure that happens during normal operations", "A failure that is easily repaired"],
+                correct: 1
+            },
+            {
+                question: "What is a DP Footprint?",
+                options: ["The size of the DP control room", "The area within which the vessel will drift in the event of DP system failure", "The area covered by position reference systems", "The vessel's turning circle"],
+                correct: 1
+            },
+            {
+                question: "The DARPS Position Reference System is one in which:",
+                options: ["A shuttle-tanker may position relative to a moving point such as an FPSO", "Differential corrections are received and used to increase the accuracy of positioning", "Relative positioning is obtained using a combination of GPS and laser-based systems", "The vessel is allowed to weathervane whilst maintaining position"],
+                correct: 0
+            },
+            {
+                question: "For DP Class 2 and 3 operations, at least three Position Reference Systems should be deployed and selected into the DP system. Why should they not all be of the same type?",
+                options: ["So that if one PRS fails, the vessel remains fully operational", "To protect against Common Mode Failure", "Because of the improved accuracy available from this configuration", "To provide two back-up references"],
+                correct: 1
+            },
+            {
+                question: "Dynamic Positioning can be defined as a system which:",
+                options: ["Controls a vessel's position and heading based on joystick inputs from a DP operator", "Automatically controls a vessel's heading exclusively by means of active thrust", "Automatically controls a vessel's position and heading exclusively by means of active thrust", "Controls a vessel's position and heading based on manual inputs from individual thruster controls"],
+                correct: 2
+            },
+            {
+                question: "A DP system is divided into seven major hardware elements. Which element is the user interface for the DPO?",
+                options: ["DP Operator Station", "GMDSS", "Environmental Reference Systems", "Position Reference Systems"],
+                correct: 0
+            },
+            {
+                question: "The Sway is determined from data from:",
+                options: ["Position Reference Systems", "Gyro Compasses", "Vertical Reference Sensors"],
+                correct: 0
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let quizCompleted = false;
+
+        function initQuiz() {
+            updateProgressBar();
+            displayQuestion();
+            updateNavigation();
+        }
+
+        function displayQuestion() {
+            const question = questions[currentQuestionIndex];
+            
+            document.getElementById('questionNumber').textContent = `Spørsmål ${currentQuestionIndex + 1} av ${questions.length}`;
+            document.getElementById('questionText').textContent = question.question;
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('totalQuestions').textContent = questions.length;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                
+                const isSelected = userAnswers[currentQuestionIndex] === index;
+                if (isSelected) {
+                    optionDiv.classList.add('selected');
+                }
+                
+                optionDiv.innerHTML = `
+                    <label>
+                        <input type="radio" name="question${currentQuestionIndex}" value="${index}" ${isSelected ? 'checked' : ''}>
+                        <span>${String.fromCharCode(65 + index)}) ${option}</span>
+                    </label>
+                `;
+                
+                optionDiv.addEventListener('click', () => selectOption(index));
+                optionsContainer.appendChild(optionDiv);
+            });
+        }
+
+        function selectOption(index) {
+            userAnswers[currentQuestionIndex] = index;
+            
+            const options = document.querySelectorAll('.option');
+            options.forEach((option, i) => {
+                option.classList.toggle('selected', i === index);
+                const radio = option.querySelector('input[type="radio"]');
+                radio.checked = i === index;
+            });
+            
+            updateNavigation();
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion();
+                updateProgressBar();
+                updateNavigation();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
+                updateProgressBar();
+                updateNavigation();
+            }
+        }
+
+        function updateProgressBar() {
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+        }
+
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.style.display = currentQuestionIndex === 0 ? 'none' : 'inline-block';
+            
+            if (currentQuestionIndex === questions.length - 1) {
+                nextBtn.textContent = 'Fullfør quiz';
+                nextBtn.disabled = userAnswers[currentQuestionIndex] === null;
+            } else {
+                nextBtn.textContent = 'Neste';
+                nextBtn.disabled = userAnswers[currentQuestionIndex] === null;
+            }
+        }
+
+        function finishQuiz() {
+            quizCompleted = true;
+            
+            let correctAnswers = 0;
+            for (let i = 0; i < questions.length; i++) {
+                if (userAnswers[i] === questions[i].correct) {
+                    correctAnswers++;
+                }
+            }
+            
+            const percentage = Math.round((correctAnswers / questions.length) * 100);
+            const passed = percentage >= 70;
+            
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'block';
+            
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            scoreDisplay.textContent = `${correctAnswers}/${questions.length} (${percentage}%)`;
+            scoreDisplay.className = passed ? 'score' : 'score fail';
+            
+            const resultMessage = document.getElementById('resultMessage');
+            if (passed) {
+                resultMessage.innerHTML = '<strong style="color: #27ae60;">Bra jobbet! Du behersker fundamentene.</strong><br>Minstekrav: 70% for bestått';
+            } else {
+                resultMessage.innerHTML = '<strong style="color: #e74c3c;">Trenger mer øving på grunnleggende konsepter.</strong><br>Minstekrav: 70% for bestått<br>Prøv igjen!';
+            }
+            
+            displayAnswerReview(correctAnswers, percentage);
+        }
+
+        function displayAnswerReview(correctAnswers, percentage) {
+            const reviewContainer = document.getElementById('answersReview');
+            let reviewHTML = '<h3 style="text-align: center; margin-bottom: 20px; color: #2c3e50;">Detaljerte Svar</h3>';
+            
+            questions.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const correctAnswer = question.correct;
+                const isCorrect = userAnswer === correctAnswer;
+                
+                reviewHTML += `
+                    <div class="answer-item ${isCorrect ? 'correct' : 'incorrect'}">
+                        <div class="answer-question">Spørsmål ${index + 1}: ${question.question}</div>
+                        <div class="answer-details">
+                            <div class="your-answer">
+                                <strong>Ditt svar:</strong> 
+                                <span class="${isCorrect ? 'correct-answer' : 'incorrect-answer'}">
+                                    ${userAnswer !== null ? String.fromCharCode(65 + userAnswer) + ') ' + question.options[userAnswer] : 'Ikke besvart'}
+                                </span>
+                            </div>
+                            ${!isCorrect ? `
+                                <div class="correct-answer">
+                                    <strong>Riktig svar:</strong> ${String.fromCharCode(65 + correctAnswer)}) ${question.options[correctAnswer]}
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            reviewContainer.innerHTML = reviewHTML;
+        }
+
+        function startOver() {
+            currentQuestionIndex = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            quizCompleted = false;
+            
+            document.getElementById('quizContainer').style.display = 'block';
+            document.getElementById('resultsContainer').style.display = 'none';
+            
+            initQuiz();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initQuiz();
+        });
+    </script>
+</body>
+</html>
