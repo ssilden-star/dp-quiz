@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DP Exam Practice - Professional Dynamic Positioning Quiz</title>
-    <meta name="description" content="Practice Dynamic Positioning (DP) exams online. Based on official Nautical Institute questions for DP revalidation certification.">
-    <meta name="keywords" content="dynamic positioning, DP exam, nautical institute, maritime, offshore, quiz, practice test">
+    <title>🚢 DP Exam Practice</title>
     <style>
         * {
             margin: 0;
@@ -14,582 +12,402 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #2d3748;
-            overflow-x: hidden;
-        }
-
-        /* Animated background particles */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: -1;
+            padding: 20px;
+            color: #333;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 20px;
-            position: relative;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
 
         .header {
-            text-align: center;
-            margin-bottom: 60px;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
             color: white;
-            animation: fadeInUp 0.8s ease-out;
+            text-align: center;
+            padding: 50px 30px;
+            position: relative;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .header::before {
+            content: '⚓';
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+
+        .header::after {
+            content: '🚢';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2rem;
+            opacity: 0.3;
         }
 
         .header h1 {
-            font-size: 3.5rem;
-            margin-bottom: 16px;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            font-weight: 700;
-            letter-spacing: -0.02em;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         .header .subtitle {
             font-size: 1.3rem;
             opacity: 0.9;
-            margin-bottom: 12px;
-            font-weight: 500;
+            font-weight: 300;
         }
 
-        .intro-card {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
+        .intro {
             padding: 40px;
-            margin-bottom: 50px;
-            box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: fadeInUp 0.8s ease-out 0.2s both;
-        }
-
-        .intro-card h2 {
-            color: #ffffff;
-            font-size: 2rem;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        .intro-card p {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.1rem;
-            line-height: 1.7;
-            margin-bottom: 30px;
-        }
-
-        .exam-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 32px;
-            margin-bottom: 50px;
-        }
-
-        .exam-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 24px;
-            padding: 32px;
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 0.8s ease-out calc(0.4s + var(--delay, 0s)) both;
-        }
-
-        .exam-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--accent-color);
-        }
-
-        .exam-1 { --accent-color: linear-gradient(90deg, #3b82f6, #8b5cf6); --delay: 0s; }
-        .exam-2 { --accent-color: linear-gradient(90deg, #ef4444, #f97316); --delay: 0.1s; }
-        .exam-3 { --accent-color: linear-gradient(90deg, #10b981, #06b6d4); --delay: 0.2s; }
-
-        .exam-card:hover {
-            transform: translateY(-12px) scale(1.02);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
-        }
-
-        .exam-card h2 {
-            color: #1a202c;
-            margin-bottom: 16px;
-            font-size: 1.6rem;
-            font-weight: 700;
-        }
-
-        .exam-info {
-            margin-bottom: 24px;
-        }
-
-        .exam-info p {
-            margin-bottom: 12px;
-            color: #4a5568;
-            line-height: 1.6;
-        }
-
-        .exam-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 24px;
-            font-size: 0.9rem;
-            color: #718096;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 14px 32px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
             text-align: center;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            border: none;
-            font-size: 16px;
-            position: relative;
-            overflow: hidden;
+            background: #f8f9fa;
         }
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
+        .intro h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2rem;
         }
 
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-            color: white;
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
-        }
-
-        .btn-secondary {
-            background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
-            color: white;
-            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
-            color: white;
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        .intro p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
         }
 
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-            margin-top: 32px;
+            gap: 20px;
+            padding: 0 40px;
+            margin-bottom: 40px;
         }
 
         .feature {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 24px;
-            border-radius: 16px;
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
         }
 
         .feature:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-4px);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
         }
 
         .feature h3 {
-            color: #ffffff;
-            margin-bottom: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
         }
 
         .feature p {
-            color: rgba(255, 255, 255, 0.8);
+            color: #666;
             font-size: 0.95rem;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
-        .footer {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
+        .exam-section {
             padding: 40px;
+        }
+
+        .exam-section h2 {
             text-align: center;
-            box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: fadeInUp 0.8s ease-out 0.6s both;
+            color: #2c3e50;
+            margin-bottom: 40px;
+            font-size: 2.2rem;
         }
 
-        .footer h3 {
-            color: #ffffff;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        .footer p {
-            color: rgba(255, 255, 255, 0.9);
-            line-height: 1.6;
-            margin-bottom: 16px;
-        }
-
-        .disclaimer {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: 24px;
-            padding-top: 24px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .disclaimer a {
-            color: #60a5fa;
-            text-decoration: none;
-        }
-
-        .disclaimer a:hover {
-            color: #93c5fd;
-            text-decoration: underline;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 16px;
-            }
-
-            .header h1 {
-                font-size: 2.5rem;
-            }
-
-            .header .subtitle {
-                font-size: 1.1rem;
-            }
-            
-            .exam-grid {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-            
-            .intro-card, .footer {
-                padding: 24px;
-            }
-
-            .exam-card {
-                padding: 24px;
-            }
-
-            .exam-stats {
-                flex-direction: column;
-                gap: 4px;
-            }
-        }
-
-        .badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
+        .exam-card {
+            background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
-            padding: 6px 14px;
             border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-left: 12px;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(52, 152, 219, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .icon {
-            font-size: 2.5rem;
-            margin-bottom: 16px;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-        }
-
-        .floating-elements {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .floating-elements::before {
-            content: '🚢';
+        .exam-card::before {
+            content: '';
             position: absolute;
-            top: 15%;
-            right: 8%;
-            font-size: 3rem;
-            opacity: 0.1;
-            animation: float 8s ease-in-out infinite;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: transform 0.6s ease;
         }
 
-        .floating-elements::after {
-            content: '⚓';
-            position: absolute;
-            bottom: 15%;
-            left: 8%;
+        .exam-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(52, 152, 219, 0.4);
+        }
+
+        .exam-card:hover::before {
+            transform: translateX(100%) translateY(100%) rotate(45deg);
+        }
+
+        .exam-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .exam-title {
             font-size: 2rem;
-            opacity: 0.1;
-            animation: float 10s ease-in-out infinite reverse;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-25px) rotate(5deg); }
+        .exam-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            white-space: nowrap;
         }
 
-        .stats-banner {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.15));
-            border-radius: 16px;
-            padding: 20px;
-            margin: 24px 0;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .exam-description {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            opacity: 0.95;
+        }
+
+        .exam-topics {
+            font-size: 1rem;
+            opacity: 0.9;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .start-exam-btn {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
             backdrop-filter: blur(10px);
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 20px;
+        .start-exam-btn:hover {
+            background: rgba(255,255,255,0.25);
+            border-color: rgba(255,255,255,0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 20px;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .stat {
             text-align: center;
         }
 
-        .stat-item {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
         .stat-number {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #ffffff;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #3498db;
             display: block;
         }
 
         .stat-label {
             font-size: 0.9rem;
-            opacity: 0.8;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .intro, .exam-section {
+                padding: 20px;
+            }
+            
+            .exam-card {
+                padding: 25px;
+            }
+            
+            .exam-title {
+                font-size: 1.5rem;
+            }
+            
+            .exam-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .stats {
+                gap: 20px;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .features {
+                grid-template-columns: 1fr;
+                padding: 0 20px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="floating-elements"></div>
-    
     <div class="container">
         <div class="header">
             <h1>🚢 DP Exam Practice</h1>
-            <div class="subtitle">Professional Dynamic Positioning Quiz Collection</div>
-            <div class="subtitle">Based on The Nautical Institute Official Exam Questions</div>
+            <p class="subtitle">Dynamic Positioning Revalidation Quiz</p>
         </div>
 
-        <div class="intro-card">
-            <h2>Master Your DP Skills</h2>
-            <p>Prepare for your Dynamic Positioning (DP) revalidation exam with these comprehensive interactive quizzes. Each exam is meticulously crafted based on official questions from The Nautical Institute, covering all essential aspects of DP operations and systems.</p>
+        <div class="intro">
+            <h2>Forbered deg til DP Revalidering</h2>
+            <p>
+                Øv til din Dynamic Positioning (DP) revalidering med denne omfattende interaktive quizen. 
+                Eksamen er nøye utarbeidet basert på offisielle spørsmål fra The Nautical Institute, 
+                og dekker alle essensielle aspekter av DP-operasjoner og systemer.
+            </p>
             
-            <div class="stats-banner">
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <span class="stat-number">32+</span>
-                        <span class="stat-label">Official Questions</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">3</span>
-                        <span class="stat-label">Practice Exams</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">70%</span>
-                        <span class="stat-label">Pass Mark</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">Free</span>
-                        <span class="stat-label">Always</span>
-                    </div>
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-number">30</span>
+                    <span class="stat-label">Spørsmål</span>
                 </div>
-            </div>
-
-            <div class="features">
-                <div class="feature">
-                    <div class="icon">📝</div>
-                    <h3>Official Questions</h3>
-                    <p>Real exam questions from The Nautical Institute DP certification program</p>
+                <div class="stat">
+                    <span class="stat-number">70%</span>
+                    <span class="stat-label">Bestått</span>
                 </div>
-                <div class="feature">
-                    <div class="icon">⚡</div>
-                    <h3>Instant Feedback</h3>
-                    <p>Immediate results with detailed explanations and correct answers</p>
-                </div>
-                <div class="feature">
-                    <div class="icon">📱</div>
-                    <h3>Mobile Optimized</h3>
-                    <p>Practice seamlessly on any device - phone, tablet, or desktop</p>
-                </div>
-                <div class="feature">
-                    <div class="icon">🎯</div>
-                    <h3>Exam Standard</h3>
-                    <p>Same format and passing criteria as official DP exams</p>
+                <div class="stat">
+                    <span class="stat-number">60</span>
+                    <span class="stat-label">Minutter</span>
                 </div>
             </div>
         </div>
 
-        <div class="exam-grid">
-            <div class="exam-card exam-1">
-                <h2>DP Online Exam 1 <span class="badge">Fundamentals</span></h2>
-                <div class="exam-info">
-                    <p><strong>Focus:</strong> Core DP systems, redundancy concepts, and position reference systems</p>
-                    <p><strong>Topics:</strong> Equipment classes, Common Mode Failure, DARPS systems, DP footprint</p>
-                </div>
-                <div class="exam-stats">
-                    <span>📊 18 Questions</span>
-                    <span>⏱️ ~20 minutes</span>
-                    <span>🎓 Intermediate</span>
-                </div>
-                <a href="exam1.html" class="btn btn-primary">Start Exam 1</a>
+        <div class="features">
+            <div class="feature">
+                <span class="feature-icon">📋</span>
+                <h3>Ekte Eksamensspørsmål</h3>
+                <p>Virkelige spørsmål fra The Nautical Institute DP-sertifiseringsprogram</p>
             </div>
-
-            <div class="exam-card exam-2">
-                <h2>DP Online Exam 2 <span class="badge">Acoustics</span></h2>
-                <div class="exam-info">
-                    <p><strong>Focus:</strong> Acoustic positioning systems and underwater sound propagation</p>
-                    <p><strong>Topics:</strong> HPR systems, USBL, LBL, GNSS, acoustic interference and conditions</p>
-                </div>
-                <div class="exam-stats">
-                    <span>📊 8 Questions</span>
-                    <span>⏱️ ~10 minutes</span>
-                    <span>🎓 Advanced</span>
-                </div>
-                <a href="exam2.html" class="btn btn-secondary">Start Exam 2</a>
+            <div class="feature">
+                <span class="feature-icon">✅</span>
+                <h3>Detaljerte Svar</h3>
+                <p>Umiddelbare resultater med detaljerte forklaringer og riktige svar</p>
             </div>
+            <div class="feature">
+                <span class="feature-icon">📱</span>
+                <h3>Responsive Design</h3>
+                <p>Øv sømløst på alle enheter - telefon, nettbrett eller desktop</p>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">🎯</span>
+                <h3>Offisielt Format</h3>
+                <p>Samme format og bestå-kriterier som offisielle DP-eksamener</p>
+            </div>
+        </div>
 
-            <div class="exam-card exam-3">
-                <h2>DP Online Exam 3 <span class="badge">Operations</span></h2>
-                <div class="exam-info">
-                    <p><strong>Focus:</strong> Operational procedures and real-world sensor management</p>
-                    <p><strong>Topics:</strong> Wind sensors, gyrocompass systems, Taut Wire, Auto Track operations</p>
+        <div class="exam-section">
+            <h2>Start Eksamen</h2>
+            
+            <div class="exam-card">
+                <div class="exam-header">
+                    <div class="exam-title">
+                        <span>⚓</span>
+                        DP Revalidering Eksamen
+                    </div>
+                    <div class="exam-badge">30 Spørsmål</div>
                 </div>
-                <div class="exam-stats">
-                    <span>📊 6 Questions</span>
-                    <span>⏱️ ~8 minutes</span>
-                    <span>🎓 Practical</span>
+                
+                <div class="exam-description">
+                    <strong>Fokus:</strong> Kjernesystemer for DP, redundanskonsepter, og posisjonsreferansesystemer
                 </div>
-                <a href="exam3.html" class="btn btn-success">Start Exam 3</a>
+                
+                <div class="exam-topics">
+                    <strong>Tema:</strong> Utstyrklasser, Common Mode Failure, DARPS-systemer, DP footprint, 
+                    akustiske posisjonssystemer, operasjonelle prosedyrer, og sensorhåndtering
+                </div>
+                
+                <a href="exam1.html" class="start-exam-btn">🚀 Start Eksamen</a>
             </div>
         </div>
 
         <div class="footer">
-            <h3>Professional DP Training Platform</h3>
-            <p>This comprehensive practice platform was created to support maritime professionals in their DP career development. All questions are sourced from official examination materials and maintain the same rigorous standards as The Nautical Institute's certification program.</p>
-            
-            <div class="disclaimer">
-                <p><strong>Important Disclaimer:</strong> This is an independent practice platform created for educational purposes. For official DP certification and revalidation, please visit <a href="https://www.nautinst.org" target="_blank" rel="noopener">The Nautical Institute</a> official website.</p>
-                <p><strong>Exam Information:</strong> Official DP revalidation exams consist of 30 multiple-choice questions, 1-hour time limit, 70% minimum pass mark, conducted in English.</p>
-            </div>
-            
-            <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-                <p style="font-size: 1.1rem; font-weight: 600;">🌟 <strong>Excellence in DP Training</strong> 🌟</p>
-                <p style="font-size: 0.95rem; opacity: 0.8; margin-top: 8px;">
-                    Trusted by maritime professionals worldwide • Updated with latest industry standards
-                </p>
-            </div>
+            <p>
+                Basert på offisiell dokumentasjon fra The Nautical Institute<br>
+                Lykke til med din DP revalidering! ⚓
+            </p>
         </div>
     </div>
-
-    <script>
-        // Add smooth page load animation
-        document.addEventListener('DOMContentLoaded', function() {
-            document.body.style.opacity = '0';
-            setTimeout(() => {
-                document.body.style.transition = 'opacity 0.5s ease-in-out';
-                document.body.style.opacity = '1';
-            }, 100);
-        });
-
-        // Add interactive hover effects for exam cards
-        document.querySelectorAll('.exam-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-12px) scale(1.02)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-
-        // Add click tracking for analytics (optional)
-        document.querySelectorAll('.btn').forEach(button => {
-            button.addEventListener('click', function(e) {
-                const examName = this.textContent.trim();
-                console.log('Starting exam:', examName);
-                
-                // Add loading state
-                this.style.opacity = '0.8';
-                this.style.transform = 'scale(0.98)';
-                
-                setTimeout(() => {
-                    this.style.opacity = '1';
-                    this.style.transform = 'scale(1)';
-                }, 200);
-            });
-        });
-
-        // Smooth scroll behavior
-        document.documentElement.style.scrollBehavior = 'smooth';
-        
-        // Add parallax effect to floating elements
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const floatingElements = document.querySelector('.floating-elements');
-            if (floatingElements) {
-                floatingElements.style.transform = `translateY(${scrolled * 0.1}px)`;
-            }
-        });
-    </script>
 </body>
 </html>
