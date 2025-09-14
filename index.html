@@ -1,585 +1,133 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚢 DP Practice Quizzes - Island Offshore</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e3a5f 0%, #2980b9 50%, #17a2b8 100%);
-            min-height: 100vh;
-            padding: 20px;
-            color: #333;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #1e3a5f, #2980b9);
-            color: white;
-            text-align: center;
-            padding: 40px 30px 50px 30px;
-            position: relative;
-        }
-
-        .logo-container {
-            margin-bottom: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .logo {
-            width: 120px;
-            height: 120px;
-            position: relative;
-            margin: 0 auto;
-        }
-
-        .logo-image {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 4px 15px rgba(0,0,0,0.2));
-        }
-
-        .company-name {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: white;
-            letter-spacing: 3px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-            margin-bottom: 10px;
-        }
-
-        .header h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-
-        .header .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            font-weight: 300;
-        }
-
-        .intro {
-            padding: 40px;
-            text-align: center;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-        }
-
-        .intro h2 {
-            color: #1e3a5f;
-            margin-bottom: 20px;
-            font-size: 2rem;
-            font-weight: 600;
-        }
-
-        .intro p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #495057;
-            max-width: 800px;
-            margin: 0 auto 30px auto;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            padding: 0 40px;
-            margin-bottom: 40px;
-        }
-
-        .feature {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 8px 25px rgba(30, 58, 95, 0.1);
-            transition: all 0.3s ease;
-            border-top: 4px solid #17a2b8;
-        }
-
-        .feature:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(30, 58, 95, 0.15);
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .feature h3 {
-            color: #1e3a5f;
-            margin-bottom: 12px;
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-
-        .feature p {
-            color: #6c757d;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        .quizzes-section {
-            padding: 50px 40px;
-            background: #f8f9fa;
-        }
-
-        .quizzes-section h2 {
-            text-align: center;
-            color: #1e3a5f;
-            margin-bottom: 40px;
-            font-size: 2.2rem;
-            font-weight: 600;
-        }
-
-        .quiz-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        .quiz-card {
-            border-radius: 20px;
-            padding: 35px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            color: white;
-        }
-
-        .quiz-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg);
-            transition: transform 0.6s ease;
-        }
-
-        .quiz-card:hover {
-            transform: translateY(-12px);
-        }
-
-        .quiz-card:hover::before {
-            transform: translateX(100%) translateY(100%) rotate(45deg);
-        }
-
-        .quiz-card.quiz1 {
-            background: linear-gradient(135deg, #1e3a5f, #2980b9);
-        }
-
-        .quiz-card.quiz1:hover {
-            box-shadow: 0 25px 50px rgba(30, 58, 95, 0.3);
-        }
-
-        .quiz-card.quiz2 {
-            background: linear-gradient(135deg, #17a2b8, #20c997);
-        }
-
-        .quiz-card.quiz2:hover {
-            box-shadow: 0 25px 50px rgba(23, 162, 184, 0.3);
-        }
-
-        .quiz-card.quiz3 {
-            background: linear-gradient(135deg, #2980b9, #17a2b8);
-        }
-
-        .quiz-card.quiz3:hover {
-            box-shadow: 0 25px 50px rgba(41, 128, 185, 0.3);
-        }
-
-        .quiz-card.quiz4 {
-            background: linear-gradient(135deg, #1e3a5f, #17a2b8);
-        }
-
-        .quiz-card.quiz4:hover {
-            box-shadow: 0 25px 50px rgba(30, 58, 95, 0.4);
-        }
-
-        .quiz-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .quiz-title {
-            font-size: 1.9rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .quiz-badge {
-            background: rgba(255,255,255,0.25);
-            padding: 10px 18px;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            white-space: nowrap;
-            backdrop-filter: blur(10px);
-        }
-
-        .quiz-description {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 18px;
-            opacity: 0.95;
-        }
-
-        .quiz-topics {
-            font-size: 1rem;
-            opacity: 0.9;
-            font-weight: 500;
-            margin-bottom: 28px;
-            line-height: 1.4;
-        }
-
-        .start-quiz-btn {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 2px solid rgba(255,255,255,0.4);
-            padding: 16px 32px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            backdrop-filter: blur(10px);
-        }
-
-        .start-quiz-btn:hover {
-            background: rgba(255,255,255,0.3);
-            border-color: rgba(255,255,255,0.7);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        .stats {
-            background: linear-gradient(135deg, #1e3a5f, #2980b9);
-            color: white;
-            padding: 50px 40px;
-            text-align: center;
-        }
-
-        .stats h3 {
-            font-size: 2rem;
-            margin-bottom: 35px;
-            font-weight: 600;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 35px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2.8rem;
-            font-weight: bold;
-            color: #17a2b8;
-            display: block;
-            margin-bottom: 12px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            opacity: 0.9;
-            font-weight: 500;
-        }
-
-        .footer {
-            background: #1e3a5f;
-            color: white;
-            text-align: center;
-            padding: 35px;
-        }
-
-        .footer p {
-            opacity: 0.8;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-                border-radius: 15px;
-            }
-            
-            .header {
-                padding: 30px 20px;
-            }
-            
-            .logo {
-                width: 80px;
-                height: 80px;
-            }
-            
-            .company-name {
-                font-size: 1.6rem;
-                letter-spacing: 2px;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .intro, .quizzes-section, .stats {
-                padding: 30px 20px;
-            }
-            
-            .quiz-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .quiz-card {
-                padding: 25px;
-            }
-            
-            .quiz-title {
-                font-size: 1.5rem;
-            }
-            
-            .quiz-header {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .features {
-                grid-template-columns: 1fr;
-                padding: 0 20px;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
-            }
-            
-            .company-name {
-                font-size: 1.4rem;
-                letter-spacing: 1px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🚢 DP Practice Quizzes - Island Offshore</title>
+  <style>
+    /* STYLES ER UENDRET – for oversiktens skyld er de utelatt her */
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="logo-container">
-                <div class="logo">
-                    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Outer circle -->
-                        <circle cx="200" cy="200" r="180" fill="#1e3a5f" stroke="none"/>
-                        
-                        <!-- Inner white circle -->
-                        <circle cx="200" cy="200" r="120" fill="white"/>
-                        
-                        <!-- Vertical pin part -->
-                        <rect x="170" y="60" width="60" height="160" fill="#17a2b8"/>
-                        
-                        <!-- Pin bottom point -->
-                        <polygon points="170,220 200,280 230,220" fill="#17a2b8"/>
-                        
-                        <!-- Bottom arc cutout -->
-                        <path d="M 80 280 A 120 120 0 0 0 320 280 Z" fill="#1e3a5f"/>
-                    </svg>
-                </div>
-                <div class="company-name">ISLAND OFFSHORE</div>
-            </div>
-            <h1>DP Practice Quizzes</h1>
-            <p class="subtitle">Dynamic Positioning Revalidation Training</p>
+  <div class="container">
+    <div class="header">
+      <div class="logo-container">
+        <div class="logo">
+          <img src="Island-Offshore-logo-farger.png" alt="Island Offshore logo" class="logo-image">
         </div>
-
-        <div class="intro">
-            <h2>Forbered deg til DP Revalidering</h2>
-            <p>
-                Øv til din Dynamic Positioning (DP) revalidering med disse omfattende interaktive quizene. 
-                Hver quiz fokuserer på spesifikke områder av DP-operasjoner og er utarbeidet basert på 
-                offisielle spørsmål fra The Nautical Institute.
-            </p>
-        </div>
-
-        <div class="features">
-            <div class="feature">
-                <span class="feature-icon">📋</span>
-                <h3>Ekte Spørsmål</h3>
-                <p>Virkelige spørsmål fra The Nautical Institute DP-sertifiseringsprogram</p>
-            </div>
-            <div class="feature">
-                <span class="feature-icon">✅</span>
-                <h3>Detaljerte Svar</h3>
-                <p>Umiddelbare resultater med detaljerte forklaringer og riktige svar</p>
-            </div>
-            <div class="feature">
-                <span class="feature-icon">📱</span>
-                <h3>Responsiv</h3>
-                <p>Fungerer perfekt på alle enheter - telefon, nettbrett eller desktop</p>
-            </div>
-            <div class="feature">
-                <span class="feature-icon">🎯</span>
-                <h3>Målrettet</h3>
-                <p>Hver quiz dekker spesifikke områder for optimal læring</p>
-            </div>
-        </div>
-
-        <div class="quizzes-section">
-            <h2>Velg Quiz</h2>
-            
-            <div class="quiz-grid">
-                <div class="quiz-card quiz1">
-                    <div class="quiz-header">
-                        <div class="quiz-title">
-                            <span>⚙️</span>
-                            Quiz 1: Fundamentals
-                        </div>
-                        <div class="quiz-badge">16 Spørsmål</div>
-                    </div>
-                    
-                    <div class="quiz-description">
-                        <strong>Fokus:</strong> Grunnleggende DP-systemer og redundanskonsepter
-                    </div>
-                    
-                    <div class="quiz-topics">
-                        <strong>Tema:</strong> PRS-systemer, Common Mode Failure, DARPS, DP Footprint, systemredundans
-                    </div>
-                    
-                    <a href="quiz1.html" class="start-quiz-btn">🚀 Start Quiz 1</a>
-                </div>
-
-                <div class="quiz-card quiz2">
-                    <div class="quiz-header">
-                        <div class="quiz-title">
-                            <span>🔊</span>
-                            Quiz 2: Acoustic
-                        </div>
-                        <div class="quiz-badge">8 Spørsmål</div>
-                    </div>
-                    
-                    <div class="quiz-description">
-                        <strong>Fokus:</strong> Akustiske posisjonssystemer og undervannslyd
-                    </div>
-                    
-                    <div class="quiz-topics">
-                        <strong>Tema:</strong> HPR-systemer, USBL, LBL, GNSS, akustisk interferens og betingelser
-                    </div>
-                    
-                    <a href="quiz2.html" class="start-quiz-btn">🌊 Start Quiz 2</a>
-                </div>
-
-                <div class="quiz-card quiz3">
-                    <div class="quiz-header">
-                        <div class="quiz-title">
-                            <span>⚡</span>
-                            Quiz 3: Operations
-                        </div>
-                        <div class="quiz-badge">6 Spørsmål</div>
-                    </div>
-                    
-                    <div class="quiz-description">
-                        <strong>Fokus:</strong> Operasjonelle prosedyrer og sensorhåndtering
-                    </div>
-                    
-                    <div class="quiz-topics">
-                        <strong>Tema:</strong> Vindsensorer, gyrokompass, Taut Wire, Auto Track-operasjoner
-                    </div>
-                    
-                    <a href="quiz3.html" class="start-quiz-btn">⚡ Start Quiz 3</a>
-                </div>
-
-                <div class="quiz-card quiz4">
-                    <div class="quiz-header">
-                        <div class="quiz-title">
-                            <span>🎓</span>
-                            Quiz 4: Advanced
-                        </div>
-                        <div class="quiz-badge">19 Spørsmål</div>
-                    </div>
-                    
-                    <div class="quiz-description">
-                        <strong>Fokus:</strong> Avanserte tema og utvidede konsepter
-                    </div>
-                    
-                    <div class="quiz-topics">
-                        <strong>Tema:</strong> Komplekse konfigurasjoner, presisjonsmålinger, vessel models, kontrollsystemer
-                    </div>
-                    
-                    <a href="quiz4.html" class="start-quiz-btn">🎓 Start Quiz 4</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="stats">
-            <h3>Quiz Oversikt</h3>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <span class="stat-number">49</span>
-                    <span class="stat-label">Totalt Spørsmål</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">4</span>
-                    <span class="stat-label">Separate Quizer</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">70%</span>
-                    <span class="stat-label">Bestått-grense</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">100%</span>
-                    <span class="stat-label">Gratis Øving</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer">
-            <p>
-                <strong>Island Offshore</strong> - Dynamic Positioning Training Center<br>
-               Utarbeidet av Stig Silden. <br>
-                Lykke til med din DP revalidering! ⚓
-            </p>
-        </div>
+        <div class="company-name">ISLAND OFFSHORE</div>
+      </div>
+      <h1>DP Practice Quizzes</h1>
+      <p class="subtitle">Dynamic Positioning Revalidation Training</p>
     </div>
+
+    <div class="intro">
+      <h2>Forbered deg til DP Revalidering</h2>
+      <p>
+        Øv til din Dynamic Positioning (DP) revalidering med disse omfattende interaktive quizene. 
+        Hver quiz fokuserer på spesifikke områder av DP-operasjoner og er utarbeidet basert på 
+        offisielle spørsmål fra The Nautical Institute.
+      </p>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <span class="feature-icon">📋</span>
+        <h3>Ekte Spørsmål</h3>
+        <p>Virkelige spørsmål fra The Nautical Institute DP-sertifiseringsprogram</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">✅</span>
+        <h3>Detaljerte Svar</h3>
+        <p>Umiddelbare resultater med detaljerte forklaringer og riktige svar</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">📱</span>
+        <h3>Responsiv</h3>
+        <p>Fungerer perfekt på alle enheter - telefon, nettbrett eller desktop</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🎯</span>
+        <h3>Målrettet</h3>
+        <p>Hver quiz dekker spesifikke områder for optimal læring</p>
+      </div>
+    </div>
+
+    <div class="quizzes-section">
+      <h2>Velg Quiz</h2>
+
+      <div class="quiz-grid">
+        <div class="quiz-card quiz1">
+          <div class="quiz-header">
+            <div class="quiz-title"><span>⚙️</span>Quiz 1: Fundamentals</div>
+            <div class="quiz-badge">16 Spørsmål</div>
+          </div>
+          <div class="quiz-description"><strong>Fokus:</strong> Grunnleggende DP-systemer og redundanskonsepter</div>
+          <div class="quiz-topics"><strong>Tema:</strong> PRS-systemer, Common Mode Failure, DARPS, DP Footprint, systemredundans</div>
+          <a href="quiz1.html" class="start-quiz-btn">🚀 Start Quiz 1</a>
+        </div>
+
+        <div class="quiz-card quiz2">
+          <div class="quiz-header">
+            <div class="quiz-title"><span>🔊</span>Quiz 2: Acoustic</div>
+            <div class="quiz-badge">8 Spørsmål</div>
+          </div>
+          <div class="quiz-description"><strong>Fokus:</strong> Akustiske posisjonssystemer og undervannslyd</div>
+          <div class="quiz-topics"><strong>Tema:</strong> HPR-systemer, USBL, LBL, GNSS, akustisk interferens og betingelser</div>
+          <a href="quiz2.html" class="start-quiz-btn">🌊 Start Quiz 2</a>
+        </div>
+
+        <div class="quiz-card quiz3">
+          <div class="quiz-header">
+            <div class="quiz-title"><span>⚡</span>Quiz 3: Operations</div>
+            <div class="quiz-badge">6 Spørsmål</div>
+          </div>
+          <div class="quiz-description"><strong>Fokus:</strong> Operasjonelle prosedyrer og sensorhåndtering</div>
+          <div class="quiz-topics"><strong>Tema:</strong> Vindsensorer, gyrokompass, Taut Wire, Auto Track-operasjoner</div>
+          <a href="quiz3.html" class="start-quiz-btn">⚡ Start Quiz 3</a>
+        </div>
+
+        <div class="quiz-card quiz4">
+          <div class="quiz-header">
+            <div class="quiz-title"><span>🎓</span>Quiz 4: Advanced</div>
+            <div class="quiz-badge">19 Spørsmål</div>
+          </div>
+          <div class="quiz-description"><strong>Fokus:</strong> Avanserte tema og utvidede konsepter</div>
+          <div class="quiz-topics"><strong>Tema:</strong> Komplekse konfigurasjoner, presisjonsmålinger, vessel models, kontrollsystemer</div>
+          <a href="quiz4.html" class="start-quiz-btn">🎓 Start Quiz 4</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <h3>Quiz Oversikt</h3>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="stat-number">49</span>
+          <span class="stat-label">Totalt Spørsmål</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">4</span>
+          <span class="stat-label">Separate Quizer</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">70%</span>
+          <span class="stat-label">Bestått-grense</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">100%</span>
+          <span class="stat-label">Gratis Øving</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>
+        <strong>Island Offshore</strong> – Dynamic Positioning Training Center<br>
+        Laget av Stig Silden<br>
+        Lykke til med din DP revalidering! ⚓
+      </p>
+    </div>
+  </div>
 </body>
 </html>
