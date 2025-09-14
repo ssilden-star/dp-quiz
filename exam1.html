@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DP Online Exam 1 - Dynamic Positioning Quiz</title>
-    <meta name="description" content="DP Online Exam 1 - Practice Dynamic Positioning fundamentals with 18 official questions.">
+    <title>DP Online Eksamen 1</title>
     <style>
         * {
             margin: 0;
@@ -13,787 +12,639 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #2d3748;
-            overflow-x: hidden;
-        }
-
-        /* Animated background particles */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: -1;
+            padding: 20px;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
-            position: relative;
-        }
-        
-        .quiz-container {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: fadeInUp 0.8s ease-out;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .nav-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 30px;
-            color: rgba(255, 255, 255, 0.9);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            padding: 10px 16px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
-        
-        h1 {
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
             text-align: center;
-            color: #ffffff;
-            margin-bottom: 40px;
+        }
+
+        .header h1 {
             font-size: 2.5rem;
-            font-weight: 700;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            letter-spacing: -0.02em;
+            margin-bottom: 10px;
         }
 
-        .exam-info {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(147, 51, 234, 0.15));
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 32px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-        }
-
-        .exam-info h3 {
-            color: #ffffff;
+        .header p {
             font-size: 1.1rem;
-            margin-bottom: 8px;
-            font-weight: 600;
+            opacity: 0.9;
         }
 
-        .exam-info p {
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.6;
-        }
-        
-        .question-counter {
-            text-align: center;
-            margin: 24px 0;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1rem;
-        }
-        
-        .progress-container {
-            margin: 24px 0;
-            position: relative;
-        }
-
-        .progress {
-            background: rgba(255, 255, 255, 0.2);
-            height: 8px;
-            border-radius: 50px;
-            overflow: hidden;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
         .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
-            width: 0%;
-            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 50px;
-            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
-        }
-        
-        .question {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 32px;
-            margin: 32px 0;
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            display: none;
-            position: relative;
-            overflow: hidden;
+            width: 100%;
+            height: 8px;
+            background: #ecf0f1;
+            margin: 20px 0;
         }
 
-        .question::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+        .progress-fill {
+            height: 100%;
+            background: #3498db;
+            border-radius: 4px;
+            transition: width 0.3s ease;
         }
-        
-        .question.active {
-            display: block;
-            animation: questionSlide 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+        .quiz-content {
+            padding: 40px;
         }
-        
-        @keyframes questionSlide {
-            from {
-                opacity: 0;
-                transform: translateY(20px) scale(0.98);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
+
+        .question-container {
+            margin-bottom: 30px;
         }
-        
-        .question h3 {
-            color: #1a202c;
-            margin-bottom: 24px;
-            font-size: 1.2rem;
-            line-height: 1.6;
+
+        .question-number {
+            color: #3498db;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 1.3rem;
             font-weight: 600;
-        }
-        
-        .options {
-            list-style: none;
-            padding: 0;
-            display: grid;
-            gap: 16px;
-        }
-        
-        .options li {
-            padding: 20px 24px;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            border: 2px solid rgba(148, 163, 184, 0.2);
-            border-radius: 16px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 25px;
             line-height: 1.5;
         }
 
-        .options li::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
-            transition: left 0.5s;
-        }
-
-        .options li:hover::before {
-            left: 100%;
-        }
-        
-        .options li:hover {
-            border-color: #3b82f6;
-            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
-        }
-        
-        .options li.selected {
-            border-color: #3b82f6;
-            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
-            transform: translateY(-1px);
-        }
-        
-        .options li.correct {
-            border-color: #10b981;
-            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-            animation: correctPulse 0.8s ease-out;
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
-        }
-        
-        .options li.incorrect {
-            border-color: #ef4444;
-            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-            animation: shake 0.6s ease-in-out;
-            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3);
-        }
-        
-        @keyframes correctPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-        }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-8px); }
-            75% { transform: translateX(8px); }
-        }
-        
-        .controls {
+        .options {
             display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin: 40px 0;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 15px;
         }
-        
-        button {
-            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-            color: white;
-            border: none;
-            padding: 14px 32px;
-            font-size: 16px;
-            border-radius: 50px;
+
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px 20px;
             cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+            transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
         }
 
-        button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
+        .option:hover {
+            border-color: #3498db;
+            background: #e3f2fd;
+        }
+
+        .option.selected {
+            border-color: #3498db;
+            background: #e3f2fd;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
+        }
+
+        .option input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.3);
+        }
+
+        .option label {
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
         }
 
-        button:hover::before {
-            left: 100%;
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
         }
-        
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
         }
-        
-        button:disabled {
-            background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        .btn:disabled {
+            background: #bdc3c7;
             cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
         }
 
-        button:disabled::before {
-            display: none;
+        .question-counter {
+            font-size: 1rem;
+            color: #7f8c8d;
         }
-        
-        .score {
+
+        .results {
             text-align: center;
-            font-size: 1.4rem;
-            margin: 32px 0;
-            padding: 32px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            white-space: pre-line;
-            line-height: 1.6;
-        }
-        
-        .score.excellent {
-            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
-            border-color: #10b981;
-            color: #065f46;
-        }
-        
-        .score.good {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            border-color: #f59e0b;
-            color: #92400e;
-        }
-        
-        .score.needs-improvement {
-            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-            border-color: #ef4444;
-            color: #991b1b;
+            padding: 40px;
         }
 
-        @media (max-width: 768px) {
+        .results h2 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .score {
+            font-size: 3rem;
+            color: #27ae60;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .score.fail {
+            color: #e74c3c;
+        }
+
+        .answers-review {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .answer-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        .answer-item.correct {
+            border-left: 5px solid #27ae60;
+            background: #d5f4e6;
+        }
+
+        .answer-item.incorrect {
+            border-left: 5px solid #e74c3c;
+            background: #fadbd8;
+        }
+
+        .answer-question {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .answer-details {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .your-answer {
+            margin-bottom: 5px;
+        }
+
+        .correct-answer {
+            color: #27ae60;
+            font-weight: 600;
+        }
+
+        .incorrect-answer {
+            color: #e74c3c;
+        }
+
+        @media (max-width: 600px) {
             .container {
-                padding: 16px;
-            }
-
-            .quiz-container {
-                padding: 24px;
+                margin: 10px;
+                border-radius: 10px;
             }
             
-            h1 {
-                font-size: 2rem;
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .quiz-content {
+                padding: 20px;
             }
             
             .question {
-                padding: 24px;
-                margin: 20px 0;
+                font-size: 1.1rem;
             }
-
-            .options li {
-                padding: 16px 20px;
+            
+            .navigation {
+                flex-direction: column;
+                gap: 15px;
             }
-
-            button {
-                padding: 12px 24px;
-                font-size: 14px;
-            }
-        }
-
-        .floating-elements {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .floating-elements::before {
-            content: '🚢';
-            position: absolute;
-            top: 20%;
-            right: 10%;
-            font-size: 2rem;
-            opacity: 0.1;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .floating-elements::after {
-            content: '⚓';
-            position: absolute;
-            bottom: 20%;
-            left: 10%;
-            font-size: 1.5rem;
-            opacity: 0.1;
-            animation: float 8s ease-in-out infinite reverse;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
         }
     </style>
 </head>
 <body>
-    <div class="floating-elements"></div>
-    
     <div class="container">
-        <div class="quiz-container">
-            <a href="index.html" class="nav-link">← Back to Home</a>
-            
-            <h1>🚢 DP Online Exam 1</h1>
-            
-            <div class="exam-info">
-                <h3>DP Fundamentals & Systems</h3>
-                <p>This exam covers basic DP systems, redundancy concepts, position reference systems, and equipment class requirements. Based on official Nautical Institute exam questions.</p>
+        <div class="header">
+            <h1>DP Online Eksamen 1</h1>
+            <p>Dynamic Positioning - Revalidation Quiz</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
             </div>
-            
-            <div class="question-counter">
-                Question <span id="current-question">1</span> of <span id="total-questions">18</span>
-            </div>
-            
-            <div class="progress-container">
-                <div class="progress">
-                    <div class="progress-bar" id="progress-bar"></div>
+        </div>
+
+        <div class="quiz-content">
+            <div id="quizContainer">
+                <div class="question-container">
+                    <div class="question-number" id="questionNumber">Spørsmål 1 av 30</div>
+                    <div class="question" id="questionText"></div>
+                    <div class="options" id="optionsContainer"></div>
+                </div>
+                
+                <div class="navigation">
+                    <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()">Forrige</button>
+                    <div class="question-counter">
+                        <span id="currentQuestion">1</span> / <span id="totalQuestions">30</span>
+                    </div>
+                    <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Neste</button>
                 </div>
             </div>
-            
-            <!-- Question 1 -->
-            <div class="question active" data-question="1">
-                <h3>1. Which of the following inputs is required before surge or sway can be automatically controlled?</h3>
-                <ul class="options">
-                    <li data-answer="wrong">A) Wind Sensor</li>
-                    <li data-answer="wrong">B) Vertical Reference Sensor</li>
-                    <li data-answer="wrong">C) Power Management System</li>
-                    <li data-answer="correct">D) Position Reference System</li>
-                </ul>
-            </div>
 
-            <!-- Question 2 -->
-            <div class="question" data-question="2">
-                <h3>2. The possibility of loss of Position and/or Heading is reduced by:</h3>
-                <ul class="options">
-                    <li data-answer="wrong">A) Ensuring system redundancy to Equipment Class 2 or 3</li>
-                    <li data-answer="wrong">B) Deploying multiple Position Reference Systems</li>
-                    <li data-answer="wrong">C) Ensuring DP Operators are well-trained and experienced</li>
-                    <li data-answer="correct">D) Efficient and comprehensive operational planning</li>
-                </ul>
-            </div>
-
-            <!-- Question 3 -->
-            <div class="question" data-question="3">
-                <h3>3. What does the DP System use to calculate weighting (or confidence) for each Position Reference System?</h3>
-                <ul class="options">
-                    <li data-answer="wrong">A) Distance from the receiver</li>
-                    <li data-answer="wrong">B) Signal strength</li>
-                    <li data-answer="wrong">C) Weather conditions</li>
-                    <li data-answer="correct">D) Relative spread of fixes</li>
-                </ul>
-            </div>
-
-            <!-- Question 4 -->
-            <div class="question" data-question="4">
-                <h3>4. How many Position Reference Systems should be available and online during a Class 2 operation, according to IMO Recommendations?</h3>
-                <ul class="options">
-                    <li data-answer="wrong">A) 1</li>
-                    <li data-answer="wrong">B) 2</li>
-                    <li data-answer="correct">C) 3</li>
-                    <li data-answer="wrong">D) 4</li>
-                </ul>
-            </div>
-
-            <!-- Question 5 -->
-            <div class="question" data-question="5">
-                <h3>5. The function of DP system Redundancy is to:</h3>
-                <ul class="options">
-                    <li data-answer="wrong">A) Enable the vessel to continue operations subsequent to a single failure</li>
-                    <li data-answer="wrong">B) Allow the Captain to sleep better</li>
-                    <li data-answer="correct">C) Allow the operation to be safely abandoned after any single-point failure</li>
-                    <li data-answer="wrong">D) Allow vessel to use a higher setpoint speed</li>
-                </ul>
-            </div>
-
-            <!-- Question 6 -->
-            <div class="question" data-question="6">
-                <h3>6. What is the maximum effective range for Laser Position Reference Systems such as CyScan and Fanbeam?</h3>
-                <ul class="options">
-                    <li data-answer="wrong">A) 10 - 50m</li>
-                    <li data-answer="correct">B) 100 - 500m</li>
-                    <li data-answer="wrong">C) 500 - 1000m</li>
-                    <li data-answer="wrong">D) 1000m +</li>
-                </ul>
-            </div>
-
-            <!-- Question 7 -->
-            <div class="question" data-question="7">
-                <h3>7. What is the maximum effective range for Taut Wire Position Reference Systems?</h3>
-                <ul class="options">
-                    <li data-answer="wrong">A) 50 - 100m</li>
-                    <li data-answer="wrong">B) 100 - 250m</li>
-                    <li data-answer="correct">C) 300 - 2000m</li>
-                    <li data-answer="wrong">D) 2000m +</li>
-                </ul>
-            </div>
-
-            <!-- Question 8 -->
-            <div class="question" data-question="8">
-                <h3>8. How is the heading reference for the DP system normally obtained?</h3>
-                <ul class="options">
-                    <li data-answer="wrong">A) Using the ship's magnetic compass</li>
-                    <li data-answer="correct">B) Using the ship's gyrocompass</li>
-                    <li data-answer="wrong">C) Using the heading from the GPS</li>
-                    <li data-answer="wrong">D) Using the wind sensor</li>
-                </ul>
-            </div>
-
-            <!-- Question 9 -->
-            <div class="question" data-question="9">
-                <h3>9. How many Independent Power Generation systems should be available during DP Class 3 operations?</h3>
-                <ul class="options">
-                    <li data-answer="wrong">A) 1</li>
-                    <li data-answer="wrong">B) 2</li>
-                    <li data-answer="correct">C) 3</li>
-                    <li data-answer="wrong">D) 4</li>
-                </ul>
-            </div>
-
-            <!-- Question 10 -->
-            <div class="question" data-question="10">
-                <h3>10. What is a 'Common Mode Failure'?</h3>
-                <ul class="options">
-                    <li data-answer="wrong">A) A failure that occurs when the vessel is moving</li>
-                    <li data-answer="correct">B) A failure that affects multiple systems from a single cause</li>
-                    <li data-answer="wrong">C) A failure that happens during normal operations</li>
-                    <li data-answer="wrong">D) A failure that is easily repaired</li>
-                </ul>
-            </div>
-
-            <!-- Question 11 -->
-            <div class="question" data-question="11">
-                <h3>11. What is a DP Footprint?</h3>
-                <ul class="options">
-                    <li data-answer="wrong">A) The size of the DP control room</li>
-                    <li data-answer="correct">B) The area within which the vessel will drift in the event of DP system failure</li>
-                    <li data-answer="wrong">C) The area covered by position reference systems</li>
-                    <li data-answer="wrong">D) The vessel's turning circle</li>
-                </ul>
-            </div>
-
-            <!-- Question 12 -->
-            <div class="question" data-question="12">
-                <h3>12. The DARPS Position Reference System is one in which:</h3>
-                <ul class="options">
-                    <li data-answer="correct">A) A shuttle-tanker may position relative to a moving point such as an FPSO</li>
-                    <li data-answer="wrong">B) Differential corrections are received and used to increase the accuracy of positioning</li>
-                    <li data-answer="wrong">C) Relative positioning is obtained using a combination of GPS and laser-based systems</li>
-                    <li data-answer="wrong">D) The vessel is allowed to weathervane whilst maintaining position</li>
-                </ul>
-            </div>
-
-            <!-- Question 13 -->
-            <div class="question" data-question="13">
-                <h3>13. For DP Class 2 and 3 operations, at least three Position Reference Systems should be deployed and selected into the DP system. Why should they not all be of the same type?</h3>
-                <ul class="options">
-                    <li data-answer="wrong">A) So that if one PRS fails, the vessel remains fully operational</li>
-                    <li data-answer="correct">B) To protect against Common Mode Failure</li>
-                    <li data-answer="wrong">C) Because of the improved accuracy available from this configuration</li>
-                    <li data-answer="wrong">D) To provide two back-up references</li>
-                </ul>
-            </div>
-
-            <!-- Question 14 -->
-            <div class="question" data-question="14">
-                <h3>14. Dynamic Positioning can be defined as a system which:</h3>
-                <ul class="options">
-                    <li data-answer="wrong">A) Controls a vessel's position and heading based on joystick inputs from a DP operator</li>
-                    <li data-answer="wrong">B) Automatically controls a vessel's heading exclusively by means of active thrust</li>
-                    <li data-answer="correct">C) Automatically controls a vessel's position and heading exclusively by means of active thrust</li>
-                    <li data-answer="wrong">D) Controls a vessel's position and heading based on manual inputs from individual thruster controls</li>
-                </ul>
-            </div>
-
-            <!-- Question 15 -->
-            <div class="question" data-question="15">
-                <h3>15. For DP Class 2 and 3 operations, at least three Position Reference Systems should be deployed and selected into the DP system. Why should they not all be of the same type?</h3>
-                <ul class="options">
-                    <li data-answer="wrong">A) So that if one PRS fails, the vessel remains fully operational</li>
-                    <li data-answer="correct">B) To protect against Common Mode Failure</li>
-                    <li data-answer="wrong">C) Because of the improved accuracy available from this configuration</li>
-                    <li data-answer="wrong">D) To provide two back-up references</li>
-                </ul>
-            </div>
-
-            <!-- Question 16 -->
-            <div class="question" data-question="16">
-                <h3>16. How many Position Reference Systems should be available and online during a Class 2 operation, according to IMO Recommendations?</h3>
-                <ul class="options">
-                    <li data-answer="wrong">A) 1</li>
-                    <li data-answer="wrong">B) 2</li>
-                    <li data-answer="correct">C) 3</li>
-                    <li data-answer="wrong">D) 4</li>
-                </ul>
-            </div>
-
-            <!-- Question 17 -->
-            <div class="question" data-question="17">
-                <h3>17. A DP system is divided into seven major hardware elements. Which element is the user interface for the DPO?</h3>
-                <ul class="options">
-                    <li data-answer="correct">A) DP Operator Station</li>
-                    <li data-answer="wrong">B) GMDSS</li>
-                    <li data-answer="wrong">C) Environmental Reference Systems</li>
-                    <li data-answer="wrong">D) Position Reference Systems</li>
-                </ul>
-            </div>
-
-            <!-- Question 18 -->
-            <div class="question" data-question="18">
-                <h3>18. The Sway is determined from data from:</h3>
-                <ul class="options">
-                    <li data-answer="correct">A) Position Reference Systems</li>
-                    <li data-answer="wrong">B) Gyro Compasses</li>
-                    <li data-answer="wrong">C) Vertical Reference Sensors</li>
-                </ul>
-            </div>
-            
-            <div class="controls">
-                <button onclick="previousQuestion()" id="prev-btn" disabled>← Previous</button>
-                <button onclick="nextQuestion()" id="next-btn">Next →</button>
-                <button onclick="submitQuiz()" id="submit-btn" style="display: none;">Submit Quiz</button>
-            </div>
-            
-            <div id="result" style="display: none;">
-                <div class="score" id="score-display"></div>
-                <button onclick="restartQuiz()">🔄 Restart Quiz</button>
-                <a href="index.html" style="margin-left: 16px;" class="nav-link">← Back to Home</a>
+            <div id="resultsContainer" style="display: none;">
+                <div class="results">
+                    <h2>Eksamen Fullført!</h2>
+                    <div class="score" id="scoreDisplay"></div>
+                    <p id="resultMessage"></p>
+                    <div style="margin: 30px 0;">
+                        <button class="btn btn-primary" onclick="startOver()">Ta eksamen på nytt</button>
+                        <a href="index.html" class="btn btn-secondary">Tilbake til hovedmeny</a>
+                    </div>
+                </div>
+                
+                <div class="answers-review" id="answersReview">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #2c3e50;">Detaljerte Svar</h3>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        let currentQuestion = 1;
-        let totalQuestions = 18;
-        let userAnswers = {};
-        let score = 0;
+        // DP Quiz spørsmål og svar
+        const questions = [
+            {
+                question: "Which of the following inputs is required before surge or sway can be automatically controlled?",
+                options: ["Wind Sensor", "Vertical Reference Sensor", "Power Management System", "Position Reference System"],
+                correct: 3
+            },
+            {
+                question: "The possibility of loss of Position and/or Heading is reduced by:",
+                options: ["Ensuring system redundancy to Equipment Class 2 or 3.", "Deploying multiple Position Reference Systems.", "Ensuring DP Operators are well-trained and experienced.", "Efficient and comprehensive operational planning."],
+                correct: 3
+            },
+            {
+                question: "What does the DP System use to calculate weighting (or confidence) for each Position Reference System?",
+                options: ["Distance from the receiver.", "Signal strength.", "Weather conditions.", "Relative spread of fixes."],
+                correct: 3
+            },
+            {
+                question: "How many Position Reference Systems should be available and online during a Class 2 operation, according to IMO Recommendations?",
+                options: ["1", "2", "3", "4"],
+                correct: 2
+            },
+            {
+                question: "The function of DP system Redundancy is to:",
+                options: ["Enable the vessel to continue operations subsequent to a single failure.", "Allow the Captain to sleep better.", "Allow the operation to be safely abandoned after any single-point failure.", "Allow vessel to use a higher setpoint speed."],
+                correct: 2
+            },
+            {
+                question: "What is the main advantage of using multiple different types of Position Reference Systems?",
+                options: ["To increase accuracy", "To protect against Common Mode Failure", "To reduce power consumption", "To simplify operations"],
+                correct: 1
+            },
+            {
+                question: "The DARPS Position Reference System is one in which:",
+                options: ["A shuttle-tanker may position relative to a moving point such as an FPSO", "Differential corrections are received and used to increase the accuracy of positioning.", "Relative positioning is obtained using a combination of GPS and laser-based systems.", "The vessel is allowed to weathervane whilst maintaining position."],
+                correct: 1
+            },
+            {
+                question: "For DP Class 2 and 3 operations, at least three Position Reference Systems should be deployed and selected into the DP system. Why should they not all be of the same type?",
+                options: ["So that if one PRS fails, the vessel remains fully operational.", "To protect against Common Mode Failure.", "Because of the improved accuracy available from this configuration.", "To provide two back-up references."],
+                correct: 1
+            },
+            {
+                question: "Dynamic Positioning can be defined as a system which:",
+                options: ["Controls a vessel's position and heading based on joystick inputs from a DP operator.", "Automatically controls a vessel's heading exclusively by means of active thrust.", "Automatically controls a vessel's position and heading exclusively by means of active thrust.", "Controls a vessel's position and heading based on manual inputs from individual thruster controls."],
+                correct: 2
+            },
+            {
+                question: "How many Position Reference Systems should be available and online during a Class 2 operation, according to IMO Recommendations?",
+                options: ["1", "2", "3", "4"],
+                correct: 2
+            },
+            {
+                question: "A DP system is divided into seven major hardware elements. Which element is the user interface for the DPO?",
+                options: ["DP Operator Station", "GMDSS", "Environmental Reference Systems", "Position Reference Systems"],
+                correct: 0
+            },
+            {
+                question: "The Sway is determined from data from:",
+                options: ["Position Reference Systems.", "Gyro Compasses.", "Vertical Reference Sensors."],
+                correct: 0
+            },
+            {
+                question: "What is a vessel model?",
+                options: ["A totally accurate description of a vessel's motions.", "A computer algorithm that calculates thruster set point signals.", "A mathematical description of how the vessel reacts to the forces acting upon it.", "A software routine continually monitoring redundancy level."],
+                correct: 2
+            },
+            {
+                question: "Which Position Reference System provides the DP system with a global position (i.e. Latitude and Longitude or UTM co-ordinates)?",
+                options: ["FMCW Radar", "Taut Wire", "Laser", "DGNSS"],
+                correct: 3
+            },
+            {
+                question: "What is the meaning of DARPS?",
+                options: ["Desirable Artemis Related Position System.", "Differential Artemis Relative Position System", "Differential Absolute and Relative Position System", "Degraded Absolute and Rigid Position System"],
+                correct: 2
+            },
+            {
+                question: "Examples of Positioning Reference Systems (PRS) that can use multiple targets are:",
+                options: ["Laser and GNSS", "Laser and DARPS", "Laser and FMCW Radar", "Laser and Taut Wire"],
+                correct: 2
+            },
+            {
+                question: "The possibility of loss of Position and/or Heading is reduced by:",
+                options: ["Ensuring system redundancy to Equipment Class 2 or 3.", "Deploying multiple Position Reference Systems.", "Ensuring DP Operators are well-trained and experienced.", "Efficient and comprehensive operational planning."],
+                correct: 3
+            },
+            {
+                question: "A DP Class 2 or 3 vessel is fitted with four Position Reference Systems (PRS): two DGNSS, Taut Wire and Laser. In this instance, why should the DPO prefer to consider the two DGNSS as just one PRS?",
+                options: ["DGNSS systems are less reliable and accurate than surface systems.", "This is required by the IMO Equipment Class rules.", "Common-mode failures may occur to all DGNSS systems, whereby one event could result in a loss of all DGNSS position references.", "The DP Classification societies require this."],
+                correct: 2
+            },
+            {
+                question: "A local Positioning Reference System is measuring from a local Reference Origin. Examples are:",
+                options: ["Artemis, Taut Wire, FMCW Radar and Laser", "Artemis, DGNSS and Laser", "DGNSS, Taut Wire and FMCW Radar", "DGNSS, Artemis and FMCW Radar"],
+                correct: 0
+            },
+            {
+                question: "Why is it necessary for a vessel to be in Auto Position mode for a minimum of 30 minutes before starting work?",
+                options: ["To allow the DPO to complete the pre-DP checklist.", "In order that additional position-reference systems may be enabled.", "To allow the system's mathematical model to build", "To ensure that all thrusters are responding correctly."],
+                correct: 2
+            },
+            {
+                question: "What environmental forces act on a DP vessel?",
+                options: ["Wind, Wave and Current only", "Wind, Wave, Current and Tide", "Wind, Wave, Current, Tide and Swell", "All external forces including those from connected equipment"],
+                correct: 3
+            },
+            {
+                question: "The DP Control System uses which inputs to calculate the required thrust?",
+                options: ["Position error and heading error only", "Position error, heading error and environmental forces", "Position error, heading error, environmental forces and vessel response", "All available sensor inputs"],
+                correct: 2
+            },
+            {
+                question: "What is the purpose of the Kalman Filter in a DP system?",
+                options: ["To control thruster allocation", "To estimate vessel position and environmental forces", "To monitor system redundancy", "To control power management"],
+                correct: 1
+            },
+            {
+                question: "Which of the following is NOT a typical DP vessel classification?",
+                options: ["DP1", "DP2", "DP3", "DP4"],
+                correct: 3
+            },
+            {
+                question: "What does FMEA stand for in DP context?",
+                options: ["Failure Mode and Effects Analysis", "Forward Motion Environmental Assessment", "Functional Maritime Equipment Analysis", "Fixed Marine Equipment Assessment"],
+                correct: 0
+            },
+            {
+                question: "The concept of 'worst case failure' in DP operations refers to:",
+                options: ["Complete power failure", "Loss of all position references", "Single failure that has the most severe consequence", "Weather exceeding operational limits"],
+                correct: 2
+            },
+            {
+                question: "What is the primary purpose of trials and sea trials for DP vessels?",
+                options: ["To test maximum speed", "To verify DP system performance and redundancy", "To train the crew", "To obtain insurance certification"],
+                correct: 1
+            },
+            {
+                question: "Which document provides the framework for DP operations?",
+                options: ["SOLAS Convention", "MARPOL Annex", "IMO MSC Circular", "ISM Code"],
+                correct: 2
+            },
+            {
+                question: "What is the minimum number of independent power generation systems required for DP Class 3?",
+                options: ["2", "3", "4", "5"],
+                correct: 1
+            },
+            {
+                question: "The term 'Common Mode Failure' in DP systems means:",
+                options: ["Multiple failures occurring simultaneously", "A single event affecting multiple similar systems", "Failure of the most common equipment", "Failure during normal operations"],
+                correct: 1
+            }
+        ];
 
-        function updateProgress() {
-            const progress = (currentQuestion / totalQuestions) * 100;
-            document.getElementById('progress-bar').style.width = progress + '%';
-            document.getElementById('current-question').textContent = currentQuestion;
+        let currentQuestionIndex = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let quizCompleted = false;
+
+        function initQuiz() {
+            updateProgressBar();
+            displayQuestion();
+            updateNavigation();
         }
 
-        function showQuestion(questionNum) {
-            document.querySelectorAll('.question').forEach(q => {
-                q.classList.remove('active');
+        function displayQuestion() {
+            const question = questions[currentQuestionIndex];
+            
+            document.getElementById('questionNumber').textContent = `Spørsmål ${currentQuestionIndex + 1} av ${questions.length}`;
+            document.getElementById('questionText').textContent = question.question;
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('totalQuestions').textContent = questions.length;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                
+                const isSelected = userAnswers[currentQuestionIndex] === index;
+                if (isSelected) {
+                    optionDiv.classList.add('selected');
+                }
+                
+                optionDiv.innerHTML = `
+                    <label>
+                        <input type="radio" name="question${currentQuestionIndex}" value="${index}" ${isSelected ? 'checked' : ''}>
+                        <span>${String.fromCharCode(65 + index)}) ${option}</span>
+                    </label>
+                `;
+                
+                optionDiv.addEventListener('click', () => selectOption(index));
+                optionsContainer.appendChild(optionDiv);
             });
-            document.querySelector(`[data-question="${questionNum}"]`).classList.add('active');
+        }
+
+        function selectOption(index) {
+            userAnswers[currentQuestionIndex] = index;
             
-            document.getElementById('prev-btn').disabled = questionNum === 1;
-            document.getElementById('next-btn').style.display = questionNum === totalQuestions ? 'none' : 'inline-block';
-            document.getElementById('submit-btn').style.display = questionNum === totalQuestions ? 'inline-block' : 'none';
+            // Oppdater visuell tilstand
+            const options = document.querySelectorAll('.option');
+            options.forEach((option, i) => {
+                option.classList.toggle('selected', i === index);
+                const radio = option.querySelector('input[type="radio"]');
+                radio.checked = i === index;
+            });
             
-            updateProgress();
+            updateNavigation();
         }
 
         function nextQuestion() {
-            if (currentQuestion < totalQuestions) {
-                currentQuestion++;
-                showQuestion(currentQuestion);
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion();
+                updateProgressBar();
+                updateNavigation();
+            } else {
+                finishQuiz();
             }
         }
 
         function previousQuestion() {
-            if (currentQuestion > 1) {
-                currentQuestion--;
-                showQuestion(currentQuestion);
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
+                updateProgressBar();
+                updateNavigation();
             }
         }
 
-        document.addEventListener('click', function(e) {
-            if (e.target.closest('.options li')) {
-                const option = e.target.closest('.options li');
-                const question = option.closest('.question');
-                const questionNum = question.getAttribute('data-question');
-                
-                question.querySelectorAll('.options li').forEach(li => {
-                    li.classList.remove('selected');
-                });
-                
-                option.classList.add('selected');
-                userAnswers[questionNum] = option.getAttribute('data-answer');
-            }
-        });
+        function updateProgressBar() {
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+        }
 
-        function calculateScore() {
-            score = 0;
-            for (let i = 1; i <= totalQuestions; i++) {
-                if (userAnswers[i] === 'correct') {
-                    score++;
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.style.display = currentQuestionIndex === 0 ? 'none' : 'inline-block';
+            
+            if (currentQuestionIndex === questions.length - 1) {
+                nextBtn.textContent = 'Fullfør eksamen';
+                nextBtn.disabled = userAnswers[currentQuestionIndex] === null;
+            } else {
+                nextBtn.textContent = 'Neste';
+                nextBtn.disabled = userAnswers[currentQuestionIndex] === null;
+            }
+        }
+
+        function finishQuiz() {
+            quizCompleted = true;
+            
+            // Beregn resultat
+            let correctAnswers = 0;
+            for (let i = 0; i < questions.length; i++) {
+                if (userAnswers[i] === questions[i].correct) {
+                    correctAnswers++;
                 }
             }
-            return score;
+            
+            const percentage = Math.round((correctAnswers / questions.length) * 100);
+            const passed = percentage >= 70;
+            
+            // Vis resultater
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'block';
+            
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            scoreDisplay.textContent = `${correctAnswers}/${questions.length} (${percentage}%)`;
+            scoreDisplay.className = passed ? 'score' : 'score fail';
+            
+            const resultMessage = document.getElementById('resultMessage');
+            if (passed) {
+                resultMessage.innerHTML = '<strong style="color: #27ae60;">Gratulerer! Du har bestått eksamen.</strong><br>Minstekrav: 70% (21/30 riktige)';
+            } else {
+                resultMessage.innerHTML = '<strong style="color: #e74c3c;">Du har ikke bestått eksamen.</strong><br>Minstekrav: 70% (21/30 riktige)<br>Prøv igjen!';
+            }
+            
+            // Vis detaljerte svar
+            displayAnswerReview(correctAnswers, percentage);
         }
 
-        function submitQuiz() {
-            const finalScore = calculateScore();
-            const percentage = Math.round((finalScore / totalQuestions) * 100);
+        function displayAnswerReview(correctAnswers, percentage) {
+            const reviewContainer = document.getElementById('answersReview');
+            let reviewHTML = '<h3 style="text-align: center; margin-bottom: 20px; color: #2c3e50;">Detaljerte Svar</h3>';
             
-            document.querySelectorAll('.question').forEach(question => {
-                const questionNum = question.getAttribute('data-question');
-                const options = question.querySelectorAll('.options li');
+            questions.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                const correctAnswer = question.correct;
+                const isCorrect = userAnswer === correctAnswer;
                 
-                options.forEach(option => {
-                    const answer = option.getAttribute('data-answer');
-                    if (answer === 'correct') {
-                        option.classList.add('correct');
-                    } else if (option.classList.contains('selected') && answer === 'wrong') {
-                        option.classList.add('incorrect');
-                    }
-                });
+                reviewHTML += `
+                    <div class="answer-item ${isCorrect ? 'correct' : 'incorrect'}">
+                        <div class="answer-question">Spørsmål ${index + 1}: ${question.question}</div>
+                        <div class="answer-details">
+                            <div class="your-answer">
+                                <strong>Ditt svar:</strong> 
+                                <span class="${isCorrect ? 'correct-answer' : 'incorrect-answer'}">
+                                    ${userAnswer !== null ? String.fromCharCode(65 + userAnswer) + ') ' + question.options[userAnswer] : 'Ikke besvart'}
+                                </span>
+                            </div>
+                            ${!isCorrect ? `
+                                <div class="correct-answer">
+                                    <strong>Riktig svar:</strong> ${String.fromCharCode(65 + correctAnswer)}) ${question.options[correctAnswer]}
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
             });
             
-            const scoreDisplay = document.getElementById('score-display');
-            let message = `🎯 Final Score: ${finalScore}/${totalQuestions} (${percentage}%)`;
-            
-            if (percentage >= 70) {
-                scoreDisplay.className = 'score excellent';
-                message += '\n\n🎉 Excellent! You passed the exam!\nYou have a solid understanding of DP fundamentals.';
-            } else if (percentage >= 60) {
-                scoreDisplay.className = 'score good';
-                message += '\n\n👍 Good effort! You needscoreDisplay.textContent = message;
-        document.getElementById('result').style.display = 'block';
-        document.querySelector('.controls').style.display = 'none';
-        
-        // Scroll to results
-        document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function restartQuiz() {
-        currentQuestion = 1;
-        userAnswers = {};
-        score = 0;
-        
-        document.querySelectorAll('.question').forEach(question => {
-            const options = question.querySelectorAll('.options li');
-            options.forEach(option => {
-                option.classList.remove('selected', 'correct', 'incorrect');
-            });
-        });
-        
-        document.getElementById('result').style.display = 'none';
-        document.querySelector('.controls').style.display = 'flex';
-        showQuestion(1);
-        
-        // Scroll to top
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Initialize
-    updateProgress();
-
-    // Add keyboard navigation
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'ArrowLeft' && currentQuestion > 1) {
-            previousQuestion();
-        } else if (e.key === 'ArrowRight' && currentQuestion < totalQuestions) {
-            nextQuestion();
-        } else if (e.key === 'Enter' && currentQuestion === totalQuestions) {
-            submitQuiz();
+            reviewContainer.innerHTML = reviewHTML;
         }
-    });
 
-    // Add smooth scrolling for better UX
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
+        function startOver() {
+            currentQuestionIndex = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            quizCompleted = false;
+            
+            document.getElementById('quizContainer').style.display = 'block';
+            document.getElementById('resultsContainer').style.display = 'none';
+            
+            initQuiz();
+        }
+
+        // Start quiz når siden lastes
+        document.addEventListener('DOMContentLoaded', function() {
+            initQuiz();
         });
-    });
-</script>
+    </script>
+</body>
+</html>
