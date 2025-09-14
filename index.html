@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚢 DP Exam Practice</title>
+    <title>🚢 DP Practice Quizzes</title>
     <style>
         * {
             margin: 0;
@@ -20,7 +20,7 @@
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
@@ -125,30 +125,35 @@
             line-height: 1.4;
         }
 
-        .exam-section {
+        .quizzes-section {
             padding: 40px;
         }
 
-        .exam-section h2 {
+        .quizzes-section h2 {
             text-align: center;
             color: #2c3e50;
             margin-bottom: 40px;
             font-size: 2.2rem;
         }
 
-        .exam-card {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
-            border-radius: 20px;
-            padding: 40px;
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
             margin-bottom: 30px;
-            box-shadow: 0 15px 35px rgba(52, 152, 219, 0.3);
+        }
+
+        .quiz-card {
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            color: white;
         }
 
-        .exam-card::before {
+        .quiz-card::before {
             content: '';
             position: absolute;
             top: -50%;
@@ -160,16 +165,47 @@
             transition: transform 0.6s ease;
         }
 
-        .exam-card:hover {
+        .quiz-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 25px 50px rgba(52, 152, 219, 0.4);
         }
 
-        .exam-card:hover::before {
+        .quiz-card:hover::before {
             transform: translateX(100%) translateY(100%) rotate(45deg);
         }
 
-        .exam-header {
+        .quiz-card.quiz1 {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        .quiz-card.quiz1:hover {
+            box-shadow: 0 25px 50px rgba(52, 152, 219, 0.4);
+        }
+
+        .quiz-card.quiz2 {
+            background: linear-gradient(135deg, #16a085, #138d75);
+        }
+
+        .quiz-card.quiz2:hover {
+            box-shadow: 0 25px 50px rgba(22, 160, 133, 0.4);
+        }
+
+        .quiz-card.quiz3 {
+            background: linear-gradient(135deg, #e91e63, #c2185b);
+        }
+
+        .quiz-card.quiz3:hover {
+            box-shadow: 0 25px 50px rgba(233, 30, 99, 0.4);
+        }
+
+        .quiz-card.quiz4 {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+
+        .quiz-card.quiz4:hover {
+            box-shadow: 0 25px 50px rgba(139, 92, 246, 0.4);
+        }
+
+        .quiz-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -178,15 +214,15 @@
             gap: 15px;
         }
 
-        .exam-title {
-            font-size: 2rem;
+        .quiz-title {
+            font-size: 1.8rem;
             font-weight: bold;
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
-        .exam-badge {
+        .quiz-badge {
             background: rgba(255,255,255,0.2);
             padding: 8px 16px;
             border-radius: 25px;
@@ -195,21 +231,21 @@
             white-space: nowrap;
         }
 
-        .exam-description {
+        .quiz-description {
             font-size: 1.1rem;
             line-height: 1.6;
             margin-bottom: 15px;
             opacity: 0.95;
         }
 
-        .exam-topics {
+        .quiz-topics {
             font-size: 1rem;
             opacity: 0.9;
             font-weight: 500;
             margin-bottom: 25px;
         }
 
-        .start-exam-btn {
+        .start-quiz-btn {
             background: rgba(255,255,255,0.15);
             color: white;
             border: 2px solid rgba(255,255,255,0.3);
@@ -224,35 +260,34 @@
             backdrop-filter: blur(10px);
         }
 
-        .start-exam-btn:hover {
+        .start-quiz-btn:hover {
             background: rgba(255,255,255,0.25);
             border-color: rgba(255,255,255,0.6);
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
         }
 
-        .footer {
+        .stats {
             background: #2c3e50;
             color: white;
+            padding: 40px;
             text-align: center;
-            padding: 30px;
-            margin-top: 20px;
         }
 
-        .footer p {
-            opacity: 0.8;
-            font-size: 0.95rem;
+        .stats h3 {
+            font-size: 2rem;
+            margin-bottom: 30px;
         }
 
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin: 30px 0;
-            flex-wrap: wrap;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .stat {
+        .stat-item {
             text-align: center;
         }
 
@@ -261,13 +296,24 @@
             font-weight: bold;
             color: #3498db;
             display: block;
+            margin-bottom: 10px;
         }
 
         .stat-label {
-            font-size: 0.9rem;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .footer {
+            background: #34495e;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            font-size: 0.95rem;
         }
 
         @media (max-width: 768px) {
@@ -284,29 +330,25 @@
                 font-size: 2rem;
             }
             
-            .intro, .exam-section {
-                padding: 20px;
+            .intro, .quizzes-section, .stats {
+                padding: 30px 20px;
             }
             
-            .exam-card {
+            .quiz-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-card {
                 padding: 25px;
             }
             
-            .exam-title {
+            .quiz-title {
                 font-size: 1.5rem;
             }
             
-            .exam-header {
+            .quiz-header {
                 flex-direction: column;
                 text-align: center;
-            }
-            
-            .stats {
-                gap: 20px;
-            }
-            
-            .stat-number {
-                font-size: 2rem;
             }
         }
 
@@ -316,9 +358,9 @@
                 padding: 0 20px;
             }
             
-            .stats {
-                flex-direction: column;
-                gap: 15px;
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
             }
         }
     </style>
@@ -326,38 +368,23 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🚢 DP Exam Practice</h1>
-            <p class="subtitle">Dynamic Positioning Revalidation Quiz</p>
+            <h1>🚢 DP Practice Quizzes</h1>
+            <p class="subtitle">Dynamic Positioning Revalidation Training</p>
         </div>
 
         <div class="intro">
             <h2>Forbered deg til DP Revalidering</h2>
             <p>
-                Øv til din Dynamic Positioning (DP) revalidering med denne omfattende interaktive quizen. 
-                Eksamen er nøye utarbeidet basert på offisielle spørsmål fra The Nautical Institute, 
-                og dekker alle essensielle aspekter av DP-operasjoner og systemer.
+                Øv til din Dynamic Positioning (DP) revalidering med disse omfattende interaktive quizene. 
+                Hver quiz fokuserer på spesifikke områder av DP-operasjoner og er utarbeidet basert på 
+                offisielle spørsmål fra The Nautical Institute.
             </p>
-            
-            <div class="stats">
-                <div class="stat">
-                    <span class="stat-number">30</span>
-                    <span class="stat-label">Spørsmål</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">70%</span>
-                    <span class="stat-label">Bestått</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">60</span>
-                    <span class="stat-label">Minutter</span>
-                </div>
-            </div>
         </div>
 
         <div class="features">
             <div class="feature">
                 <span class="feature-icon">📋</span>
-                <h3>Ekte Eksamensspørsmål</h3>
+                <h3>Ekte Spørsmål</h3>
                 <p>Virkelige spørsmål fra The Nautical Institute DP-sertifiseringsprogram</p>
             </div>
             <div class="feature">
@@ -367,38 +394,121 @@
             </div>
             <div class="feature">
                 <span class="feature-icon">📱</span>
-                <h3>Responsive Design</h3>
-                <p>Øv sømløst på alle enheter - telefon, nettbrett eller desktop</p>
+                <h3>Responsiv</h3>
+                <p>Fungerer perfekt på alle enheter - telefon, nettbrett eller desktop</p>
             </div>
             <div class="feature">
                 <span class="feature-icon">🎯</span>
-                <h3>Offisielt Format</h3>
-                <p>Samme format og bestå-kriterier som offisielle DP-eksamener</p>
+                <h3>Målrettet</h3>
+                <p>Hver quiz dekker spesifikke områder for optimal læring</p>
             </div>
         </div>
 
-        <div class="exam-section">
-            <h2>Start Eksamen</h2>
+        <div class="quizzes-section">
+            <h2>Velg Quiz</h2>
             
-            <div class="exam-card">
-                <div class="exam-header">
-                    <div class="exam-title">
-                        <span>⚓</span>
-                        DP Revalidering Eksamen
+            <div class="quiz-grid">
+                <div class="quiz-card quiz1">
+                    <div class="quiz-header">
+                        <div class="quiz-title">
+                            <span>⚙️</span>
+                            Quiz 1: Fundamentals
+                        </div>
+                        <div class="quiz-badge">16 Spørsmål</div>
                     </div>
-                    <div class="exam-badge">30 Spørsmål</div>
+                    
+                    <div class="quiz-description">
+                        <strong>Fokus:</strong> Grunnleggende DP-systemer og redundanskonsepter
+                    </div>
+                    
+                    <div class="quiz-topics">
+                        <strong>Tema:</strong> PRS-systemer, Common Mode Failure, DARPS, DP Footprint, systemredundans
+                    </div>
+                    
+                    <a href="quiz1.html" class="start-quiz-btn">🚀 Start Quiz 1</a>
                 </div>
-                
-                <div class="exam-description">
-                    <strong>Fokus:</strong> Kjernesystemer for DP, redundanskonsepter, og posisjonsreferansesystemer
+
+                <div class="quiz-card quiz2">
+                    <div class="quiz-header">
+                        <div class="quiz-title">
+                            <span>🔊</span>
+                            Quiz 2: Acoustic
+                        </div>
+                        <div class="quiz-badge">8 Spørsmål</div>
+                    </div>
+                    
+                    <div class="quiz-description">
+                        <strong>Fokus:</strong> Akustiske posisjonssystemer og undervannslyd
+                    </div>
+                    
+                    <div class="quiz-topics">
+                        <strong>Tema:</strong> HPR-systemer, USBL, LBL, GNSS, akustisk interferens og betingelser
+                    </div>
+                    
+                    <a href="quiz2.html" class="start-quiz-btn">🌊 Start Quiz 2</a>
                 </div>
-                
-                <div class="exam-topics">
-                    <strong>Tema:</strong> Utstyrklasser, Common Mode Failure, DARPS-systemer, DP footprint, 
-                    akustiske posisjonssystemer, operasjonelle prosedyrer, og sensorhåndtering
+
+                <div class="quiz-card quiz3">
+                    <div class="quiz-header">
+                        <div class="quiz-title">
+                            <span>⚡</span>
+                            Quiz 3: Operations
+                        </div>
+                        <div class="quiz-badge">6 Spørsmål</div>
+                    </div>
+                    
+                    <div class="quiz-description">
+                        <strong>Fokus:</strong> Operasjonelle prosedyrer og sensorhåndtering
+                    </div>
+                    
+                    <div class="quiz-topics">
+                        <strong>Tema:</strong> Vindsensorer, gyrokompass, Taut Wire, Auto Track-operasjoner
+                    </div>
+                    
+                    <a href="quiz3.html" class="start-quiz-btn">⚡ Start Quiz 3</a>
                 </div>
-                
-                <a href="exam1.html" class="start-exam-btn">🚀 Start Eksamen</a>
+
+                <div class="quiz-card quiz4">
+                    <div class="quiz-header">
+                        <div class="quiz-title">
+                            <span>🎓</span>
+                            Quiz 4: Advanced
+                        </div>
+                        <div class="quiz-badge">19 Spørsmål</div>
+                    </div>
+                    
+                    <div class="quiz-description">
+                        <strong>Fokus:</strong> Avanserte tema og utvidede konsepter
+                    </div>
+                    
+                    <div class="quiz-topics">
+                        <strong>Tema:</strong> Komplekse konfigurasjoner, presisjonsmålinger, vessel models, kontrollsystemer
+                    </div>
+                    
+                    <a href="quiz4.html" class="start-quiz-btn">🎓 Start Quiz 4</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats">
+            <h3>Quiz Oversikt</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">49</span>
+                    <span class="stat-label">Totalt Spørsmål</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">4</span>
+                    <span class="stat-label">Separate Quizer</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">70%</span>
+                    <span class="stat-label">Bestått-grense</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Gratis Øving</span>
+                </div>
             </div>
         </div>
 
